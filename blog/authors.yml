@@ -1,0 +1,23 @@
+basil:
+  name: Basil
+  title: Fulltime nerd
+  url: https://twitter.com/basil_0xcafe
+  image_url: https://pbs.twimg.com/profile_images/1761340225953935360/XXhuS2uH_400x400.png
+
+yangshun:
+  name: Yangshun Tay
+  title: Front End Engineer @ Facebook
+  url: https://github.com/yangshun
+  image_url: https://github.com/yangshun.png
+
+slorber:
+  name: Sébastien Lorber
+  title: Docusaurus maintainer
+  url: https://sebastienlorber.com
+  image_url: https://github.com/slorber.png
+
+endi:
+  name: Sébastien Lorber
+  title: Docusaurus maintainer
+  url: https://sebastienlorber.com
+  image_url: https://github.com/slorber.png
