@@ -15,9 +15,10 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
-        <p className="">
-          0xCAFE is your daily dose of news 📰, insights 🔍 and trends 📈 in
-          science 🔬 and technology 💻.
+        <p className="subtitle">
+          Get your daily dose of tech with quick news 📰, must-read articles 📚,
+          and interesting GitHub repositories 💻—all packed into a concise
+          15-minute read. 📧✨
         </p>
         <Form />
       </div>
