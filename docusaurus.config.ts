@@ -33,7 +33,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
         },
         blog: {
-          showReadingTime: true,
+          showReadingTime: false,
           blogSidebarCount: 20,
           blogSidebarTitle: 'Last 20 Issues',
           postsPerPage: 1
