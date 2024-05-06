@@ -239,7 +239,7 @@
             <link>https://0xcafe.news/blog/mdx-blog-post</link>
             <guid>https://0xcafe.news/blog/mdx-blog-post</guid>
             <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
-            <content:encoded><![CDATA[<iframe width="100%" height="1000px" src="https://archive.0xcafe.news/7-May-2024" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" title="Rick Astley - Never Gonna Give You Up (Official Music Video)"></iframe>]]></content:encoded>
+            <content:encoded><![CDATA[<iframe id="myFrame" width="100%" height="0px" src="https://archive.0xcafe.news/7-May-2024" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" title="Rick Astley - Never Gonna Give You Up (Official Music Video)"></iframe>]]></content:encoded>
             <category>docusaurus</category>
         </item>
         <item>
