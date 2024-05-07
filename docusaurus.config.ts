@@ -45,6 +45,9 @@ const config: Config = {
           trackingID: "G-REDACTED",
           anonymizeIP: true,
         },
+        googleTagManager: {
+          containerId: "GTM-REDACTED",
+        },
       } satisfies Preset.Options,
     ],
   ],
