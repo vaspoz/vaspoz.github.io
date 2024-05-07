@@ -1,45 +1,49 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import { themes as prismThemes } from "prism-react-renderer";
+import type { Config } from "@docusaurus/types";
+import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: '☕ 0xCAFE',
-  tagline: 'Tech & Science Newsletter',
-  favicon: 'img/logo.png',
+  title: "☕ 0xCAFE",
+  tagline: "Tech & Science Newsletter",
+  favicon: "img/logo.png",
 
-  url: 'https://0xcafe.news',
-  baseUrl: '/',
-  organizationName: 'vaspoz',
-  projectName: 'vaspoz.github.io',
+  url: "https://0xcafe.news",
+  baseUrl: "/",
+  organizationName: "vaspoz",
+  projectName: "vaspoz.github.io",
   trailingSlash: false,
-  deploymentBranch: 'master',
-  
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  deploymentBranch: "master",
+
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
 
   presets: [
     [
-      'classic',
+      "classic",
       {
         docs: {
-          sidebarPath: './sidebars.ts',
+          sidebarPath: "./sidebars.ts",
         },
         blog: {
           showReadingTime: false,
           blogSidebarCount: 20,
-          blogSidebarTitle: 'Last 20 Issues',
-          postsPerPage: 1
+          blogSidebarTitle: "Last 20 Issues",
+          postsPerPage: 1,
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: "./src/css/custom.css",
+        },
+        gtag: {
+          trackingID: "G-M6CS6EMWJM",
+          anonymizeIP: true,
         },
       } satisfies Preset.Options,
     ],
@@ -47,47 +51,47 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/social-card.png',
+    image: "img/social-card.png",
     colorMode: {
       disableSwitch: true,
     },
     navbar: {
-      title: '0xCAFE',
+      title: "0xCAFE",
       logo: {
-        alt: '0xCAFE logo',
-        src: 'img/logo.png',
+        alt: "0xCAFE logo",
+        src: "img/logo.png",
       },
       items: [
         {
           label: "Privacy",
           position: "right",
-          href: "/docs/privacy"
+          href: "/docs/privacy",
         },
-        {to: '/blog', label: 'Archive', position: 'right'},
+        { to: "/blog", label: "Archive", position: "right" },
       ],
     },
     footer: {
-      style: 'dark',
+      style: "dark",
       links: [
         {
-          title: 'Docs',
+          title: "Docs",
           items: [
             {
-              label: 'Privacy',
-              to: '/docs/privacy',
+              label: "Privacy",
+              to: "/docs/privacy",
             },
           ],
         },
         {
-          title: 'Community',
+          title: "Community",
           items: [
             {
-              label: 'X',
-              href: 'https://twitter.com/basil_0xcafe',
+              label: "X",
+              href: "https://twitter.com/basil_0xcafe",
             },
             {
-              label: 'LinkedIn',
-              href: 'https://www.linkedin.com/company/0xcafe',
+              label: "LinkedIn",
+              href: "https://www.linkedin.com/company/0xcafe",
             },
           ],
         },
