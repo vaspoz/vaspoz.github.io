@@ -4,7 +4,7 @@ export default function IframeEmbed({ postfix }) {
       width="100%"
       height="800px"
       src={`https://archive.0xcafe.news/${postfix}`}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allow
       allowFullScreen
       sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation"
     />
