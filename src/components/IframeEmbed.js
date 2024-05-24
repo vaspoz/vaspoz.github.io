@@ -6,7 +6,7 @@ export default function IframeEmbed({ postfix }) {
       src={`https://archive.0xcafe.news/${postfix}`}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowFullScreen
-      sandbox="allow-same-origin allow-popups allow-modals allow-scripts allow-top-navigation"
+      sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation"
     />
   );
 }
