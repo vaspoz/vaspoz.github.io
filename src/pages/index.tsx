@@ -19,6 +19,10 @@ function HomepageHeader() {
           Get your daily dose of tech with quick news 📰, must-read articles 📚,
           and interesting GitHub repositories 💻—all packed into a concise
           15-minute read. 📧✨
+          <p>
+            Join our community of{" "}
+            <span className={styles.readersCounter}>~715</span> daily readers 👀
+          </p>
         </p>
         <Form />
       </div>
