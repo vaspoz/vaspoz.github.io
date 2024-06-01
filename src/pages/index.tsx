@@ -4,6 +4,7 @@ import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Form from "@site/src/components/HomepageSubscribe";
 import Heading from "@theme/Heading";
+import AnimatedText from "@site/src/components/AnimatedText";
 
 import styles from "./index.module.css";
 
@@ -21,10 +22,12 @@ function HomepageHeader() {
           15-minute read. 📧✨
           <p>
             Join our community of{" "}
-            <span className={styles.readersCounter}>~715</span> daily readers 👀
+            <span className={styles.readersCounter}>~780</span> daily readers 👀
           </p>
         </p>
         <Form />
+        Subscribe now and get immediate access to our exclusive{" "}
+        <AnimatedText text="Career Development Guide!" />
       </div>
     </header>
   );
