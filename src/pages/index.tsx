@@ -22,7 +22,8 @@ function HomepageHeader() {
           15-minute read. 📧✨
           <p>
             Join our community of{" "}
-            <span className={styles.readersCounter}>~780</span> daily readers 👀
+            <span className={styles.readersCounter}>~1270</span> daily readers
+            👀
           </p>
         </p>
         <Form />
