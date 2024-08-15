@@ -18,8 +18,11 @@ const config: Config = {
   onBrokenMarkdownLinks: "warn",
 
   scripts: [
+    "/js/hotjar.js",
     {
-      src: "/js/hotjar.js"
+      src: "https://plausible.io/js/script.js",
+      defer: true,
+      "data-domain": "0xcafe.news",
     },
   ],
   // Even if you don't use internationalization, you can use this field to set
