@@ -17,9 +17,9 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className="subtitle">
-          Get your daily dose of tech with quick news 📰, must-read articles 📚,
-          and interesting GitHub repositories 💻—all packed into a concise
-          15-minute read. 📧✨
+          Get your daily dose of tech with quick news, must-read articles, and
+          interesting GitHub repositories — all packed into a concise 15-minute
+          read. 📧✨
           <p>
             Join our community of{" "}
             <span className={styles.readersCounter}>~1430</span> daily readers
@@ -27,8 +27,8 @@ function HomepageHeader() {
           </p>
         </p>
         <Form />
-        Subscribe now and get immediate access to our exclusive{" "}
-        <AnimatedText text="Career Development Guide!" />
+        Subscribe now and get the most read articles about{" "}
+        <AnimatedText text="Career Development!" />
       </div>
     </header>
   );
