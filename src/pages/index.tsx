@@ -22,7 +22,7 @@ function HomepageHeader() {
           read. 📧✨
           <p>
             Join our community of{" "}
-            <span className={styles.readersCounter}>~1430</span> daily readers
+            <span className={styles.readersCounter}>~1510</span> daily readers
             👀
           </p>
         </p>
