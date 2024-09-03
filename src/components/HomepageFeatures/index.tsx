@@ -4,74 +4,72 @@ import styles from "./styles.module.css";
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<"svg">>;
   description: JSX.Element;
+  emoji: string;
 };
 
 const FeatureList: FeatureItem[] = [
   {
     title: "Daily News Updates",
-    Svg: require("@site/static/img/calendar.svg").default,
+    emoji: "📰",
     description: (
       <>
-        Our newsletter is delivered to your inbox every <code>weekday</code>,
-        keeping you up-to-date daily.
+        Stay updated with the latest happenings in the tech world. Get concise
+        and informative news updates delivered to your inbox every day.
       </>
     ),
   },
   {
-    title: "Always Free",
-    Svg: require("@site/static/img/free.svg").default,
+    title: "Articles",
+    emoji: "📚",
     description: (
       <>
-        Stay informed without any costs. Our newsletter is always free to read.
+        Dive deep into insightful articles that cover a wide range of topics
+        from tech trends to personal development. Stay informed and inspired
+        with every read.
       </>
     ),
   },
   {
-    title: "Leave Anytime",
-    Svg: require("@site/static/img/unsubscribe.svg").default,
+    title: "Postmortems",
+    emoji: "☠️",
     description: (
       <>
-        Not interested anymore? You can easily unsubscribe from our mailing list
-        at any time.
+        Discover the lessons learned from the biggest failures in the tech
+        industry.
       </>
     ),
   },
   {
-    title: "Spam-Free Guarantee",
-    Svg: require("@site/static/img/nospam.svg").default,
+    title: "Best Apps",
+    emoji: "🚀",
     description: (
       <>
-        We value your privacy and promise only to send you relevant and valuable
-        content.
+        Discover a new app every day that can boost your productivity, enhance
+        your creativity, or just make life a little easier. Stay ahead with our
+        top picks!
       </>
     ),
   },
   {
-    title: "Stay on Trend",
-    Svg: require("@site/static/img/fire.svg").default,
-    description: (
-      <>Get the latest trending news and updates directly in your inbox.</>
-    ),
-  },
-  {
-    title: "Browse Older Issues",
-    Svg: require("@site/static/img/archive.svg").default,
+    title: "GitHub Repositories",
+    emoji: "👨‍💻",
     description: (
       <>
-        Missed an issue? Access all past newsletters through our comprehensive
-        archive.
+        Explore trending GitHub repositories and discover the best open-source
+        projects to contribute to and learn from.
       </>
     ),
   },
 ];
 
-function Feature({ title, Svg, description }: FeatureItem) {
+function Feature({ title, description, emoji }: FeatureItem) {
   return (
     <div className={clsx("col col--4")}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <span role="img" aria-label="news" style={{ fontSize: "3rem" }}>
+          {emoji}
+        </span>
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
