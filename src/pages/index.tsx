@@ -17,9 +17,7 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className="subtitle">
-          Get your daily dose of tech with quick news, must-read articles, and
-          interesting GitHub repositories — all packed into a concise 15-minute
-          read. 📧✨
+          Only essential news, articles and GitHub repositories.
           <p>
             Join our community of{" "}
             <span className={styles.readersCounter}>~1.5k</span> daily readers
@@ -43,6 +41,9 @@ export default function Home(): JSX.Element {
     >
       <HomepageHeader />
       <main>
+        <div className={styles.titleSecondary}>
+          Quick snippets from most recent issues:
+        </div>
         <HomepageFeatures />
       </main>
     </Layout>
