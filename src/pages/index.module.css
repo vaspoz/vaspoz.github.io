@@ -27,3 +27,11 @@
   font-size: 24px;
   font-weight: bold;
 }
+
+.titleSecondary {
+  text-align: center;
+  color: #005777;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 24px;
+}
