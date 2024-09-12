@@ -1,5 +1,5 @@
-import components from '@theme/MDXComponents';
-import React from 'react';
+import components from "@theme/MDXComponents";
+import React from "react";
 
 export type CodeSectionProps = {
   language: string;
@@ -8,14 +8,14 @@ export type CodeSectionProps = {
   source: string | { default: string };
 };
 
-export function CodeSection({
+export default function CodeSection({
   language,
   replace,
   section,
   source,
 }: CodeSectionProps) {
   // Unwrap ES module.
-  if (typeof source === 'object' && 'default' in source) {
+  if (typeof source === "object" && "default" in source) {
     source = source.default;
   }
 
@@ -23,7 +23,7 @@ export function CodeSection({
   if (section) {
     const pattern = new RegExp(
       `// <${section}>\\s([\\s\\S]*?)\\s// </${section}>\\s`,
-      'g',
+      "g",
     );
 
     source = source
@@ -31,24 +31,24 @@ export function CodeSection({
       .reduce(
         (source, part, index) =>
           index % 2 === 0 ? source : `${source}\n\n${part}`,
-        '',
+        "",
       );
   }
 
   // Remove remaining section tags.
-  source = source.replace(/\/\/ <.*?\n/g, '');
+  source = source.replace(/\/\/ <.*?\n/g, "");
 
   // Replace all mapped things.
   if (replace) {
     for (const [pattern, value] of Object.entries(replace)) {
-      source = source.replace(new RegExp(pattern, 'gs'), value);
+      source = source.replace(new RegExp(pattern, "gs"), value);
     }
   }
 
   // At least one newline is required for non-inline view.
   source = source.trim();
-  if (!source.includes('\n')) {
-    source += '\n';
+  if (!source.includes("\n")) {
+    source += "\n";
   }
 
   return (
