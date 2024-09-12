@@ -2,12 +2,21 @@
  * CSS files with the .module.css suffix will be treated as CSS modules
  * and scoped locally.
  */
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Muli:400,600&display=swap');
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
 
 .heroBanner {
   padding: 4rem 0;
   position: relative;
   overflow: hidden;
   background: transparent;
+  height: 60vh !important;
   /* background: linear-gradient(135deg, #00cafe, #007ca6 20%, #005777 40%, #1e3a5f 60%, #002e4a 80%, #002832); */
 }
 
@@ -36,24 +45,6 @@
   margin-top: 24px;
 }
 
-
-/**
-
-*/
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Muli:400,600&display=swap');
-
-@media (max-width: 996px) {
-  .center-if-sm {
-    text-align: center;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
 
 :root {
   --black: #000;
@@ -118,7 +109,6 @@
   filter: brightness(100%);
 }
 
-
 .testimonials {
   display: flex;
   justify-content: center;
@@ -147,6 +137,7 @@
   }
 }
 
+/* 
 .testimonial {
   margin: 2em;
   background: var(--ifm-background-surface-color);
@@ -186,7 +177,7 @@
   width: 100px;
   border-radius: 50%;
   margin: 15px 0 10px;
-}
+} */
 
 .text {
   font-family: Poppins, sans-serif;
@@ -208,71 +199,6 @@
   line-height: 1.25;
 }
 
-.text.heading-helper {
-  color: var(--uni-heading-helper-color);
-  font-family: Muli;
-  font-size: 1em;
-  font-weight: 600;
-  letter-spacing: 1px;
-  opacity: 0.6;
-}
-
-.heading {
-  color: var(--uni-heading-color);
-  font-family: Poppins;
-  font-size: 2em;
-  font-weight: bold;
-  line-height: 1.31;
-  margin-bottom: 2em;
-}
-
-.heading-white {
-  --uni-heading-color: var(--white);
-}
-
-.text.emphasis {
-  color: var(--dodger-blue);
-  font-family: Poppins;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.42;
-}
-
-.text.paragraph {
-  color: var(--white);
-  font-family: Muli;
-  font-size: 1em;
-  line-height: 1.75;
-  margin-bottom: 0.8em;
-  opacity: 0.8;
-}
-
-.text.section-subtitle {
-  color: var(--white);
-  font-family: Muli;
-  font-size: 1em;
-  font-weight: 600;
-  letter-spacing: 1px;
-  opacity: 0.6;
-}
-
-.text.footer-heading {
-  color: var(--dodger-blue);
-  font-family: Muli;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.supported {
-  color: var(--white);
-  font-family: Muli;
-  font-size: 0.85em;
-  font-weight: 600;
-  line-height: 2;
-  margin-top: 3em;
-  opacity: 0.6;
-}
-
 .title {
   color: var(--white);
   display: block;
@@ -286,22 +212,13 @@
 
 @supports (background-clip: text) {
   .description {
-    background-image: linear-gradient(81deg,
-        var(--periwinkle),
-        var(--bright-cyan),
-        var(--sea-green));
+    background: linear-gradient(to right,
+        #00cafe 20%,
+        #8b5cf6 50%,
+        #d946ef 80%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-}
-
-.text.testimonial-description {
-  color: var(--uni-testimonial-text-color);
-  font-family: Muli;
-  font-size: 1.2em;
-  line-height: 1.75;
-  opacity: 0.8;
-  text-align: center;
 }
 
 .bullets li::before {
@@ -311,8 +228,8 @@
 .bullets li {
   color: white;
   opacity: 1 !important;
+  margin-bottom: 10px;
 }
-
 
 .code {
   background: red;
