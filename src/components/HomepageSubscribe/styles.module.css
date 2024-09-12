@@ -1,9 +1,7 @@
 .subscribe_form {
   display: flex;
   flex-direction: column;
-  align-items: center;
   max-width: 600px;
-  margin: auto;
 }
 
 .subscribe_form_input_group {
@@ -11,14 +9,24 @@
   width: 100%;
 }
 
+input {
+  height: 60px;
+}
+
 .subscribe_form_input {
   flex: 1;
-  padding: 10px;
+  padding: 20px;
   border-radius: 4px 0 0 4px;
   border: 1px solid #00cafe;
   outline: none;
   box-sizing: border-box;
   font-size: 1.2em;
+  background: #00000070;
+  color: white;
+}
+
+::placeholder {
+  color: rgb(194, 194, 194);
 }
 
 .subscribe_form_button {

@@ -4,24 +4,24 @@ import { NeatConfig } from "@firecms/neat";
 export const config: NeatConfig = {
   colors: [
     {
-      color: "#cdb4db",
+      color: "#002E4A",
       enabled: true,
     },
     {
-      color: "#ffc8dd",
+      color: "#007CA6",
       enabled: true,
     },
     {
-      color: "#ffafcc",
+      color: "#005777",
       enabled: true,
     },
     {
-      color: "#bde0fe",
+      color: "#1E3A5F",
       enabled: true,
     },
     {
-      color: "#a2d2ff",
-      enabled: false,
+      color: "#002832",
+      enabled: true,
     },
   ],
   speed: 4,
@@ -36,14 +36,7 @@ export const config: NeatConfig = {
   colorSaturation: 3,
   wireframe: false,
   colorBlending: 5,
-  backgroundColor: "#003FFF",
-  backgroundAlpha: 1,
+  backgroundColor: "#000000",
+  backgroundAlpha: 0.65,
   resolution: 0.95,
 };
-
-// you can change the config at any time
-// neat.speed = 6;
-
-// you can also destroy the gradient for cleanup
-// e.g. returning from a useEffect hook in React
-// neat.destroy();
