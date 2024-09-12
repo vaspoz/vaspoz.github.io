@@ -50,22 +50,37 @@ function SystemWindow({ children, className, ...props }: SystemWindowProps) {
 function Showcase() {
   const codeSnippet = `
 // <schema>
-{
-  date: "today",
-  topics: [
-    "1": "articles"
-  ]
-}
+let newsletterDescription = {
+  name: "0xCAFE",
+  frequency: "weekday",
+  sections: [
+    "Tech and Science news",
+    "Articles",
+    "Postmortems",
+    "App of the day",
+    "GitHub repositories",
+    "Puzzles",
+  ],
+  audience: {
+    type: [
+      "software developers",
+      "engineers",
+      "architects",
+      "tech enthusiasts",
+    ],
+    currentSubscribers: 1500,
+  },
+  stats: {
+    issuesSent: 400,
+    isFree: true,
+    canUnsubscribe: true,
+  },
+};
 // </schema>
   `;
   return (
     <SystemWindow>
-      <CodeSection
-        language="json"
-        section="schema"
-        // source={require("!!raw-loader!../CommonForms/ShippingSchema")}
-        source={codeSnippet}
-      />
+      <CodeSection language="js" section="schema" source={codeSnippet} />
     </SystemWindow>
   );
 }
