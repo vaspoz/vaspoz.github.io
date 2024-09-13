@@ -8,6 +8,7 @@ type FeatureItem = {
   emoji: string;
   id?: number;
   examples: string[];
+  issueID: string;
 };
 
 const FeatureList: FeatureItem[] = [
@@ -16,6 +17,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "The latest news in tech, business, science, and more",
     Svg: require("@site/static/img/news.svg").default,
     emoji: "📰",
+    issueID: "401",
     examples: [
       "📱 Apple Announces the iPhone 16 Pro",
       "🚀 Elon Musk on pace to become world's first trillionaire by 2027",
@@ -30,6 +32,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "Articles on a variety of tech topics",
     Svg: require("@site/static/img/articles.svg").default,
     emoji: "📚",
+    issueID: "402",
     examples: [
       "🚀 How to start your first professional project from scratch for beginners",
       "🖼 How to hide files or data in a JPEG Image",
@@ -43,6 +46,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "Learn from the mistakes of the Big Techs",
     Svg: require("@site/static/img/postmortem.svg").default,
     emoji: "☠️",
+    issueID: "403",
     examples: [
       "📅 Azure (Time): A miscalculated leap year date caused invalid certificates and a global Azure outage lasting nearly a day.",
       "🛫 TUI (Config Errors): A system fault misclassified 38 female passengers as children, causing the aircraft's takeoff mass to be underestimated by 1,244 kg.",
@@ -55,6 +59,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "The best apps to use for your business and daily life",
     Svg: require("@site/static/img/appoftheday.svg").default,
     emoji: "🚀",
+    issueID: "404",
     examples: [
       "🌐 D-ID Video Translate: Instant video translation",
       "📋 Seven24.ai: Seven24 captures real feedback and turns it into actionable tasks",
@@ -67,6 +72,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "Daily updates on the best GitHub repositories",
     Svg: require("@site/static/img/github.svg").default,
     emoji: "👨‍💻",
+    issueID: "405",
     examples: [
       "👨‍💻 heyxyz/hey (23.1k ⭐): Hey is a decentralized and permissionless social media app built with Lens Protocol",
       "👨‍💻 N64Recomp/N64Recomp (6.2k ⭐): Tool to statically recompile N64 games into native executables",
@@ -76,7 +82,15 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({ id, Svg, title, subtitle, examples, emoji }: FeatureItem) {
+function Feature({
+  id,
+  Svg,
+  title,
+  subtitle,
+  examples,
+  emoji,
+  issueID,
+}: FeatureItem) {
   let className = id % 2 === 0 ? "straight" : "alternate";
   console.log("className", className);
 
@@ -90,6 +104,7 @@ function Feature({ id, Svg, title, subtitle, examples, emoji }: FeatureItem) {
             title={title}
             subtitle={subtitle}
             examples={examples}
+            issueID={issueID}
           />
         ) : (
           <OddRow
@@ -98,6 +113,7 @@ function Feature({ id, Svg, title, subtitle, examples, emoji }: FeatureItem) {
             title={title}
             subtitle={subtitle}
             examples={examples}
+            issueID={issueID}
           />
         )}
       </div>
@@ -105,15 +121,15 @@ function Feature({ id, Svg, title, subtitle, examples, emoji }: FeatureItem) {
   );
 }
 
-function EvenRow({ Svg, emoji, title, subtitle, examples }) {
+function EvenRow({ Svg, emoji, title, subtitle, examples, issueID }) {
   return (
     <>
-      <div className={clsx("col", styles.featureColumn)}>
+      <div className="col">
         <div className="text--center">
           <Svg className={styles.featureSvg} />
         </div>
       </div>
-      <div className={clsx("col", styles.featureColumn)}>
+      <div className="col">
         <div className={styles.icon}>{emoji}</div>
         <h1>{title}</h1>
         <p className={styles.description}>{subtitle}</p>
@@ -122,12 +138,20 @@ function EvenRow({ Svg, emoji, title, subtitle, examples }) {
             <li key={index}>{example}</li>
           ))}
         </ul>
+        <button
+          className={"button button--secondary"}
+          onClick={() =>
+            window.open(`http://0xcafe.news/blog/issue-${issueID}`, "_blank")
+          }
+        >
+          Check one of the issues 👉🏼
+        </button>
       </div>
     </>
   );
 }
 
-function OddRow({ Svg, emoji, title, subtitle, examples }) {
+function OddRow({ Svg, emoji, title, subtitle, examples, issueID }) {
   return (
     <>
       <div className={clsx("col", styles.featureOddRow)}>
@@ -139,8 +163,16 @@ function OddRow({ Svg, emoji, title, subtitle, examples }) {
             <li key={index}>{example}</li>
           ))}
         </ul>
+        <button
+          className={"button button--secondary"}
+          onClick={() =>
+            window.open(`http://0xcafe.news/blog/issue-${issueID}`, "_blank")
+          }
+        >
+          Check one of the issues 👉🏼
+        </button>
       </div>
-      <div className={clsx("col", styles.featureColumn)}>
+      <div className="col">
         <div className="text--center">
           <Svg className={styles.featureSvg} />
         </div>
