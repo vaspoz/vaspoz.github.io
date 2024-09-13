@@ -36,8 +36,8 @@ export default function QuotesSection() {
               <br />
               <br />
               Now, here we are—over a year, 400+ issues, and a thriving website.
-              <br />A huge thank you to all my subscribers; your support keeps
-              me energized to grow and create new content! ❤️
+              <br />A huge thank you to subscribe to my newsletter; your support
+              keeps me energized to grow and create new content! ❤️
             </p>
           </p>
         </div>
