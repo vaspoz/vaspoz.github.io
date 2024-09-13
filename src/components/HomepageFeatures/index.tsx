@@ -177,16 +177,43 @@ function Feature({ title, description, emoji }: FeatureItem) {
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+function FeatureV2({ title, description, emoji }: FeatureItem) {
   return (
-    <section className={styles.features}>
+    <div className={styles["feature-straight"]}>
       <div className="container">
         <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
+          <div className="col">
+            <h1>header</h1>
+          </div>
+          <div className="col">
+            <h1>right</h1>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  );
+}
+/*
+    <div className={clsx("col col--6")}>
+      <div className="text--center">
+        <span role="img" aria-label="news" style={{ fontSize: "3rem" }}>
+          {emoji}
+        </span>
+      </div>
+      <div className="text--center padding-horiz--md">
+        <Heading as="h3">{title}</Heading>
+      </div>
+      <p>{description}</p>
+    </div>
+  );
+}
+*/
+export default function HomepageFeatures(): JSX.Element {
+  return (
+    <>
+      {FeatureList.map((props, idx) => (
+        <FeatureV2 key={idx} {...props} />
+      ))}
+    </>
   );
 }

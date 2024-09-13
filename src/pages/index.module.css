@@ -16,7 +16,7 @@
   position: relative;
   overflow: hidden;
   background: transparent;
-  height: 60vh !important;
+  /* height: 10vh !important; */
   /* background: linear-gradient(135deg, #00cafe, #007ca6 20%, #005777 40%, #1e3a5f 60%, #002e4a 80%, #002832); */
 }
 

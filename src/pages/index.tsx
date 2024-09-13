@@ -85,7 +85,7 @@ let newsletterDescription = {
   );
 }
 
-function HomepageHeaderV2() {
+function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   const gradientRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -152,42 +152,6 @@ function HomepageHeaderV2() {
   );
 }
 
-function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
-  // const gradientRef = useRef<HTMLCanvasElement | null>(null);
-
-  // useEffect(() => {
-  //   if (gradientRef.current) {
-  //     console.log(gradientRef.current);
-  //     const neat = new NeatGradient({
-  //       ref: gradientRef.current,
-  //       ...config,
-  //     });
-  //   }
-  // }, []);
-
-  return (
-    <header className={clsx("hero hero--primary", styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="subtitle">
-          Only essential news, articles and GitHub repositories.
-          <p>
-            Join our community of{" "}
-            <span className={styles.readersCounter}>~1.5k</span> dfffaily
-            readers 👀
-          </p>
-        </p>
-        <Form />
-        Subscribe now and get the most read articles about{" "}
-        <AnimatedText text="Career Development!" />
-      </div>
-    </header>
-  );
-}
-
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -195,14 +159,10 @@ export default function Home(): JSX.Element {
       title={siteConfig.tagline}
       description="Sign up to stay up-to-date with the most recent advancements, encompassing everything from design to delivery"
     >
-      {/* <LandingPage /> */}
       <div className={classNames(styles.landing, styles["overflow-hidden"])}>
-        <HomepageHeaderV2 />
+        <HomepageHeader />
       </div>
       <main>
-        <div className={styles.titleSecondary}>
-          Quick snippets from most recent issues:
-        </div>
         <HomepageFeatures />
       </main>
     </Layout>
