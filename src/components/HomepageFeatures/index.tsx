@@ -32,7 +32,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "Articles on a variety of tech topics",
     Svg: require("@site/static/img/articles.svg").default,
     emoji: "📚",
-    issueID: "402",
+    issueID: "386",
     examples: [
       "🚀 How to start your first professional project from scratch for beginners",
       "🖼 How to hide files or data in a JPEG Image",
@@ -46,7 +46,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "Learn from the mistakes of the Big Techs",
     Svg: require("@site/static/img/postmortem.svg").default,
     emoji: "☠️",
-    issueID: "403",
+    issueID: "395",
     examples: [
       "📅 Azure (Time): A miscalculated leap year date caused invalid certificates and a global Azure outage lasting nearly a day.",
       "🛫 TUI (Config Errors): A system fault misclassified 38 female passengers as children, causing the aircraft's takeoff mass to be underestimated by 1,244 kg.",
@@ -72,7 +72,7 @@ const FeatureList: FeatureItem[] = [
     subtitle: "Daily updates on the best GitHub repositories",
     Svg: require("@site/static/img/github.svg").default,
     emoji: "👨‍💻",
-    issueID: "405",
+    issueID: "399",
     examples: [
       "👨‍💻 heyxyz/hey (23.1k ⭐): Hey is a decentralized and permissionless social media app built with Lens Protocol",
       "👨‍💻 N64Recomp/N64Recomp (6.2k ⭐): Tool to statically recompile N64 games into native executables",
