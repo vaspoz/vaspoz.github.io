@@ -80,8 +80,8 @@ const config: Config = {
         },
         { to: "/blog", label: "Archive", position: "right" },
         {
-          type: 'html',
-          position: 'right',
+          type: "html",
+          position: "right",
           value: `<a href='https://ko-fi.com/R5R6Q8N0Z' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>`,
         },
       ],
@@ -115,7 +115,7 @@ const config: Config = {
       copyright: `${new Date().getFullYear()} Made with ❤️ in Netherlands`,
     },
     prism: {
-      theme: prismThemes.github,
+      theme: prismThemes.palenight,
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,

@@ -88,6 +88,14 @@
   background: rgb(33, 27, 80);
 }
 
+@media screen and (max-width: 996px) {
+  .system-window {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .system-window iframe {
   border-radius: unset;
 }

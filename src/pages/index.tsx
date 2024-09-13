@@ -11,7 +11,6 @@ import { config } from "@site/static/js/NeatConfig";
 import classNames from "classnames";
 
 import CodeSection from "@site/src/components/CodeSection";
-
 import styles from "./index.module.css";
 
 ////////////////////////////////////
@@ -71,7 +70,8 @@ let newsletterDescription = {
     currentSubscribers: 1500,
   },
   stats: {
-    issuesSent: 400,
+    issuesSentBase: 400,
+    issuesSendModificator: "moreThan",
     isFree: true,
     canUnsubscribe: true,
   },
