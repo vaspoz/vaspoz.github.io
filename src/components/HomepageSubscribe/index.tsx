@@ -61,6 +61,7 @@ const CustomForm = ({ status, message, onValidated }) => {
               placeholder="Your email"
               name="EMAIL"
               className={styles.subscribe_form_input}
+              autoFocus
             />
             <button
               className={
