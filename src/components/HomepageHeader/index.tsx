@@ -46,7 +46,7 @@ function Showcase() {
 // <schema>
 let newsletterDescription = {
   name: "0xCAFE",
-  frequency: "weekday",
+  frequency: "cron(0 6 * * MON,THU)",
   sections: [
     "Tech and Science news",
     "Articles",
@@ -65,8 +65,10 @@ let newsletterDescription = {
     currentSubscribers: 1500,
   },
   stats: {
-    issuesSentBase: 400,
-    issuesSendModificator: "moreThan",
+    issues: {
+      base: 400,
+      modificator: "moreThan",
+    },
     isFree: true,
     canUnsubscribe: true,
   },
