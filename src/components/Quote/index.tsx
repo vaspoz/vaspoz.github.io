@@ -39,6 +39,20 @@ export default function QuotesSection() {
               <br />A huge thank you to subscribe to my newsletter; your support
               keeps me energized to grow and create new content! ❤️
             </p>
+            <button
+              className={"button button--primary"}
+              onClick={() => {
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+                setTimeout(() => {
+                  document.getElementsByName("EMAIL")[0].focus();
+                }, 500);
+              }}
+            >
+              🚀 Ready to try? Subscribe now!
+            </button>
           </p>
         </div>
       </div>
