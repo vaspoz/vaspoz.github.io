@@ -40,7 +40,7 @@ jobs:
           aws s3 cp s3://0xcafe-newsletter-archive/archive/ archive-transformer/archive --recursive
 
           # Latest issue must not be published, it's only for the main page
-          rm archive-transformer/latest.html
+          rm archive-transformer/archive/latest.html
 
       - name: Transform files
         run: |

@@ -34,6 +34,12 @@ function SystemWindow({ children, className, ...props }: SystemWindowProps) {
           className={styles["system-top-bar-circle"]}
           style={{ backgroundColor: "#42ffac" }}
         />
+        <span
+          className={styles.text}
+          style={{ paddingLeft: "10px", color: "white" }}
+        >
+          Latest issue
+        </span>
       </div>
       {children}
     </div>
