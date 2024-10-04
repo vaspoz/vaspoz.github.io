@@ -61,6 +61,7 @@ const config: Config = {
     },
     navbar: {
       title: "0xCAFE",
+      hideOnScroll: true,
       logo: {
         alt: "0xCAFE logo",
         src: "img/logo.png",
