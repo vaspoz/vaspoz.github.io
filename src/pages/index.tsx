@@ -19,7 +19,6 @@ export default function Home(): JSX.Element {
         <HomepageHeader />
       </div>
       <main>
-        <HomepageFeatures />
         <Quote />
       </main>
     </Layout>

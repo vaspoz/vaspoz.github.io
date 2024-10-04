@@ -25,7 +25,7 @@ title: "Issue #${issueNumber} (${date})"
 authors: basil
 date: ${date}
 ---
-<IframeEmbed postfix="${date}" />`;
+<IframeEmbed postfix="${date}" height={800} />`;
 };
 
 // Parse the date from the file name to an actual date object for sorting

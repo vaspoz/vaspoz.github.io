@@ -6,8 +6,9 @@ import { NeatGradient } from "@firecms/neat";
 import { config } from "@site/static/js/NeatConfig";
 import classNames from "classnames";
 
-import CodeSection from "@site/src/components/CodeSection";
 import styles from "./styles.module.css";
+
+import IframeEmbed from "../IframeEmbed";
 
 type SystemWindowProps = JSX.IntrinsicElements["div"];
 
@@ -41,43 +42,10 @@ function SystemWindow({ children, className, ...props }: SystemWindowProps) {
   );
 }
 
-function Showcase() {
-  const codeSnippet = `
-// <schema>
-let newsletterDescription = {
-  name: "0xCAFE",
-  frequency: "cron(0 6 * * MON,THU)",
-  sections: [
-    "Tech and Science news",
-    "Articles",
-    "Postmortems",
-    "App of the day",
-    "GitHub repositories",
-    "Puzzles",
-  ],
-  audience: {
-    type: [
-      "software developers",
-      "engineers",
-      "architects",
-      "tech enthusiasts",
-    ],
-    currentSubscribers: 1500,
-  },
-  stats: {
-    issues: {
-      base: 400,
-      modificator: "moreThan",
-    },
-    isFree: true,
-    canUnsubscribe: true,
-  },
-};
-// </schema>
-  `;
+function LatestIssue() {
   return (
     <SystemWindow>
-      <CodeSection language="js" section="schema" source={codeSnippet} />
+      <IframeEmbed postfix="latest" height={600} />
     </SystemWindow>
   );
 }
@@ -141,7 +109,7 @@ export default function HomepageHeader(): JSX.Element {
             <Form />
           </div>
           <div className="col">
-            <Showcase />
+            <LatestIssue />
           </div>
         </div>
       </div>
