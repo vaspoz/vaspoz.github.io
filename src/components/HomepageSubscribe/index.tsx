@@ -74,7 +74,7 @@ const CustomForm = ({ status, message, onValidated }) => {
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
-              ✔️ Subscribe
+              📬 Subscribe
             </button>
           </div>
         </div>
