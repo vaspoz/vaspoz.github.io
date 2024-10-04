@@ -8,8 +8,6 @@ import classNames from "classnames";
 
 import styles from "./styles.module.css";
 
-import IframeEmbed from "../IframeEmbed";
-
 type SystemWindowProps = JSX.IntrinsicElements["div"];
 
 function SystemWindow({ children, className, ...props }: SystemWindowProps) {
@@ -45,7 +43,15 @@ function SystemWindow({ children, className, ...props }: SystemWindowProps) {
 function LatestIssue() {
   return (
     <SystemWindow>
-      <IframeEmbed postfix="latest" height={600} />
+      <iframe
+        width="100%"
+        height="600px"
+        src={`https://archive.0xcafe.news/latest`}
+        allow="true"
+        allowFullScreen
+        sandbox="true"
+        style={{ backgroundColor: "white" }}
+      />
     </SystemWindow>
   );
 }
