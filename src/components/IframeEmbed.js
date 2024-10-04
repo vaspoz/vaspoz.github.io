@@ -1,8 +1,8 @@
-export default function IframeEmbed({ postfix, height }) {
+export default function IframeEmbed({ postfix }) {
   return (
     <iframe
       width="100%"
-      height={height + "px"}
+      height="800px"
       src={`https://archive.0xcafe.news/${postfix}`}
       allow
       allowFullScreen
