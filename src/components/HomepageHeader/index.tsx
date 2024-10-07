@@ -115,7 +115,6 @@ export default function HomepageHeader(): JSX.Element {
               <li>📰 News</li>
               <li>📚 Articles</li>
               <li>☠️ Postmortems</li>
-              <li>🚀 App of the day</li>
               <li>👨‍💻 GitHub repositories</li>
             </ul>
             <Form />

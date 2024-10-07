@@ -103,6 +103,10 @@ const config: Config = {
               label: "LinkedIn",
               href: "https://www.linkedin.com/company/0xcafe",
             },
+            {
+              label: "Telegram",
+              href: "https://t.me/basil_0xcafe",
+            },
           ],
         },
       ],
