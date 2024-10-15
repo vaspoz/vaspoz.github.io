@@ -105,7 +105,7 @@ const config: Config = {
             },
             {
               label: "Telegram",
-              href: "https://t.me/basil_0xcafe",
+              href: "https://t.me/news_0xcafe",
             },
           ],
         },
