@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Form from "@site/src/components/HomepageSubscribe";
@@ -46,19 +46,48 @@ function SystemWindow({ children, className, ...props }: SystemWindowProps) {
   );
 }
 
+function useIsWideScreen() {
+  const [isWideScreen, setIsWideScreen] = React.useState(
+    window.innerWidth >= 550,
+  );
+
+  React.useEffect(() => {
+    const handleResize = () => setIsWideScreen(window.innerWidth >= 550);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return isWideScreen;
+}
+
 function LatestIssue() {
-  return (
+  const isWideScreen = useIsWideScreen();
+
+  return isWideScreen ? (
     <SystemWindow>
       <iframe
         width="100%"
         height="600px"
-        src={`https://archive.0xcafe.news/latest`}
+        src="https://archive.0xcafe.news/latest"
         allow="true"
         allowFullScreen
         sandbox="true"
         style={{ backgroundColor: "white" }}
       />
     </SystemWindow>
+  ) : (
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <button
+        className={"button button--secondary theme-back-to-top-button"}
+        onClick={() => {
+          window.open("/blog", "_self");
+        }}
+      >
+        Curious about the latest issue 👀?
+        <br />
+        Rotate your screen or press me!{" "}
+      </button>
+    </div>
   );
 }
 
