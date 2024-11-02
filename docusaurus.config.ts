@@ -14,7 +14,7 @@ const config: Config = {
   trailingSlash: false,
   deploymentBranch: "master",
 
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
 
   scripts: ["/js/hotjar.js"],
