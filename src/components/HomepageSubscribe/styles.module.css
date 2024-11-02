@@ -60,6 +60,10 @@ input {
 }
 
 @media only screen and (max-width: 768px) {
+  .subscribe_form {
+    margin: 0 auto;
+  }
+
   .subscribe_form_input_group {
     flex-direction: column;
   }

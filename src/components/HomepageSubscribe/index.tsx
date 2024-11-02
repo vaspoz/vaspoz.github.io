@@ -48,9 +48,6 @@ const CustomForm = ({ status, message, onValidated }) => {
               />
             </div>
           </div>
-          <div style={{ color: "#10b981" }}>
-            You'll receive a link to the Guide in your welcome email.
-          </div>
         </div>
       ) : (
         <div className={styles.subscribe_form}>

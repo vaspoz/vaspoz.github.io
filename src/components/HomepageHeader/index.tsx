@@ -4,7 +4,9 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Form from "@site/src/components/HomepageSubscribe";
 import { NeatGradient } from "@firecms/neat";
 import { config } from "@site/static/js/NeatConfig";
+import Link from "@docusaurus/Link";
 import classNames from "classnames";
+import BrowserOnly from "@docusaurus/BrowserOnly";
 
 import styles from "./styles.module.css";
 
@@ -61,33 +63,38 @@ function useIsWideScreen() {
 }
 
 function LatestIssue() {
-  const isWideScreen = useIsWideScreen();
+  return (
+    <BrowserOnly>
+      {() => {
+        const isWideScreen = useIsWideScreen();
 
-  return isWideScreen ? (
-    <SystemWindow>
-      <iframe
-        width="100%"
-        height="600px"
-        src="https://archive.0xcafe.news/latest"
-        allow="true"
-        allowFullScreen
-        sandbox="true"
-        style={{ backgroundColor: "white" }}
-      />
-    </SystemWindow>
-  ) : (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <button
-        className={"button button--secondary theme-back-to-top-button"}
-        onClick={() => {
-          window.open("/blog", "_self");
-        }}
-      >
-        Curious about the latest issue 👀?
-        <br />
-        Rotate your screen or press me!{" "}
-      </button>
-    </div>
+        return isWideScreen ? (
+          <SystemWindow>
+            <iframe
+              width="100%"
+              height="600px"
+              src="https://archive.0xcafe.news/latest"
+              allow="true"
+              allowFullScreen
+              sandbox="true"
+              style={{ backgroundColor: "white" }}
+            />
+          </SystemWindow>
+        ) : (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <Link to="/blog">
+              <button
+                className={"button button--secondary theme-back-to-top-button"}
+              >
+                To quickly check the latest issue,
+                <br />
+                rotate your device or press me 🎯!{" "}
+              </button>
+            </Link>
+          </div>
+        );
+      }}
+    </BrowserOnly>
   );
 }
 
