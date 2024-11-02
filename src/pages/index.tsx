@@ -1,7 +1,6 @@
 import React from "react";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import TestimonialsSection from "@site/src/components/HomepageTestimonials";
 import classNames from "classnames";
 
