@@ -15,8 +15,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.5.2",
-    "@docusaurus/preset-classic": "^3.5.2",
+    "@docusaurus/core": "^3.6.1",
+    "@docusaurus/preset-classic": "^3.6.1",
     "@firecms/neat": "^0.2.2",
     "@mdx-js/react": "^3.0.0",
     "classnames": "^2.5.1",
@@ -32,9 +32,9 @@
     "uniforms-semantic": "^4.0.0-alpha.6"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.5.2",
-    "@docusaurus/tsconfig": "^3.5.2",
-    "@docusaurus/types": "^3.5.2",
+    "@docusaurus/module-type-aliases": "^3.6.1",
+    "@docusaurus/tsconfig": "^3.6.1",
+    "@docusaurus/types": "^3.6.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
     "tailwind-merge": "^2.3.0",
