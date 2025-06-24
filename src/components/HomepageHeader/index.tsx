@@ -150,8 +150,9 @@ export default function HomepageHeader(): JSX.Element {
             <ul className={classNames(styles.bullets)}>
               <li>📰 News</li>
               <li>📚 Articles</li>
-              <li>☠️ Postmortems</li>
+              <li>🤷‍♂️ Useless fact</li>
               <li>👨‍💻 GitHub repositories</li>
+              <li>🖼️ Random images</li>
             </ul>
             <Form />
           </div>
