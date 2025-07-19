@@ -80,12 +80,6 @@ const Footer: React.FC = () => {
             <Link to="/privacy" className="text-gray-400 hover:text-cafe-400 text-sm transition-colors duration-300">
               Privacy Policy
             </Link>
-            <button className="text-gray-400 hover:text-cafe-400 text-sm transition-colors duration-300">
-              Terms of Service
-            </button>
-            <button className="text-gray-400 hover:text-cafe-400 text-sm transition-colors duration-300">
-              Unsubscribe
-            </button>
           </div>
         </motion.div>
       </div>
