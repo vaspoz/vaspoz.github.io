@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon, ChartBarIcon, LightBulbIcon, CodeBracketIcon, BugAntIcon, SparklesIcon, PhotoIcon } from '@heroicons/react/24/solid';
+import KeywordExtractor from 'keyword-extractor';
 
 interface Issue {
   id: number;
@@ -158,45 +159,84 @@ const extractIssueContent = async (issueUrl: string): Promise<{ title: string; n
   }
 };
 
-// Helper function to extract topics from content
+// Helper function to extract topics from content using NLP
 const extractTopicsFromContent = (htmlContent: string): string[] => {
-  const techKeywords = {
-    'AI': ['AI', 'artificial intelligence', 'machine learning', 'ChatGPT', 'OpenAI'],
-    'JavaScript': ['JavaScript', 'TypeScript', 'React', 'Vue', 'Angular', 'Node.js'],
-    'Python': ['Python', 'Django', 'Flask', 'pandas', 'numpy'],
-    'Cloud': ['AWS', 'Azure', 'Google Cloud', 'Docker', 'Kubernetes'],
-    'GitHub': ['GitHub', 'Git', 'repository', 'open source'],
-    'Development': ['development', 'programming', 'coding', 'software'],
-    'Security': ['security', 'cybersecurity', 'vulnerability', 'encryption'],
-    'Web Development': ['web development', 'frontend', 'backend', 'API'],
-    'DevOps': ['DevOps', 'CI/CD', 'deployment', 'infrastructure'],
-    'Mobile': ['mobile', 'iOS', 'Android', 'React Native', 'Flutter']
-  };
-  
-  const foundTopics: string[] = [];
-  const contentLower = htmlContent.toLowerCase();
-  
-  for (const [topic, keywords] of Object.entries(techKeywords)) {
-    if (keywords.some(keyword => contentLower.includes(keyword.toLowerCase()))) {
-      foundTopics.push(topic);
+  try {
+    // Convert HTML to plain text
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    const plainText = doc.body.textContent || doc.textContent || '';
+    
+    if (plainText.length < 100) {
+      return ["Tech News", "Development", "Tools", "Insights"];
     }
-  }
-  
-  // Return up to 4 topics, with fallbacks if none found
-  const topics = foundTopics.slice(0, 4);
-  if (topics.length === 0) {
+    
+    // Extract keywords using NLP
+    const extractionResult: string[] = KeywordExtractor.extract(plainText, {
+      language: 'english',
+      remove_digits: false,
+      return_changed_case: true,
+      remove_duplicates: true
+    });
+    
+    // Tech-specific keyword mapping and filtering
+    const techKeywordMap: { [key: string]: string[] } = {
+      'AI & Machine Learning': ['ai', 'artificial', 'intelligence', 'machine', 'learning', 'neural', 'chatgpt', 'openai', 'llm', 'model', 'training', 'algorithm'],
+      'Web Development': ['javascript', 'typescript', 'react', 'vue', 'angular', 'nodejs', 'frontend', 'backend', 'web', 'html', 'css', 'api', 'framework'],
+      'Cloud & DevOps': ['aws', 'azure', 'google', 'cloud', 'docker', 'kubernetes', 'devops', 'deployment', 'infrastructure', 'server', 'hosting'],
+      'Mobile Development': ['mobile', 'ios', 'android', 'flutter', 'react-native', 'app', 'smartphone'],
+      'Data & Analytics': ['data', 'analytics', 'database', 'sql', 'python', 'pandas', 'numpy', 'visualization', 'analysis'],
+      'Security': ['security', 'cybersecurity', 'vulnerability', 'encryption', 'privacy', 'hacking', 'breach', 'protection'],
+      'Open Source': ['github', 'git', 'repository', 'opensource', 'open-source', 'contribution', 'community'],
+      'Programming': ['programming', 'coding', 'software', 'development', 'developer', 'code', 'language'],
+      'Blockchain': ['blockchain', 'crypto', 'bitcoin', 'ethereum', 'nft', 'web3', 'defi'],
+      'Startup & Business': ['startup', 'business', 'funding', 'investor', 'company', 'market', 'revenue']
+    };
+    
+    // Find matching tech categories
+    const foundTopics: string[] = [];
+    const keywordSet = new Set(extractionResult.map((k: string) => k.toLowerCase()));
+    
+    for (const [category, keywords] of Object.entries(techKeywordMap)) {
+      const matchCount = keywords.filter(keyword => {
+        // Check for exact matches or partial matches in extracted keywords
+        return Array.from(keywordSet).some((extracted: string) => 
+          extracted.includes(keyword) || keyword.includes(extracted)
+        );
+      }).length;
+      
+      if (matchCount >= 2) { // Require at least 2 related keywords
+        foundTopics.push(category);
+      }
+    }
+    
+    // Sort by relevance and take top 4
+    const sortedTopics = foundTopics.slice(0, 4);
+    
+    // If no tech topics found, use most relevant extracted keywords as fallback
+    if (sortedTopics.length === 0) {
+      const relevantKeywords = extractionResult
+        .filter(keyword => keyword.length > 3 && keyword.length < 15) // Filter reasonable lengths
+        .slice(0, 4)
+        .map(keyword => keyword.charAt(0).toUpperCase() + keyword.slice(1)); // Capitalize
+      
+      return relevantKeywords.length > 0 ? relevantKeywords : ["Tech News", "Development", "Tools", "Insights"];
+    }
+    
+    // Fill up to 4 topics if needed
+    while (sortedTopics.length < 3) {
+      const defaults = ["Tech News", "Development", "Innovation", "Tools"];
+      const toAdd = defaults.find(def => !sortedTopics.includes(def));
+      if (toAdd) sortedTopics.push(toAdd);
+      else break;
+    }
+    
+    return sortedTopics;
+    
+  } catch (error) {
+    console.error('Error extracting topics:', error);
     return ["Tech News", "Development", "Tools", "Insights"];
   }
-  
-  // Fill up to 4 topics with defaults if needed
-  while (topics.length < 3) {
-    const defaults = ["Tech News", "Development", "Tools", "Insights", "Open Source"];
-    const toAdd = defaults.find(def => !topics.includes(def));
-    if (toAdd) topics.push(toAdd);
-    else break;
-  }
-  
-  return topics;
 };
 
 // Function to fetch latest issue URLs from archive page
