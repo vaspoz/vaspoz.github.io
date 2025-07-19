@@ -4,7 +4,7 @@ import { UserGroupIcon, SparklesIcon, RocketLaunchIcon, ChevronRightIcon } from 
 import { Link } from 'react-router-dom';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 
-const MAILCHIMP_URL = "https://news.us21.list-manage.com/subscribe/post?u=REDACTED_MAILCHIMP_U&id=REDACTED_MAILCHIMP_ID&f_id=00cff5e6f0";
+const MAILCHIMP_URL = "https://news.us21.list-manage.com/subscribe/post-json?u=REDACTED_MAILCHIMP_U&id=REDACTED_MAILCHIMP_ID";
 
 interface CustomFormProps {
   status: 'sending' | 'error' | 'success' | null;
@@ -26,6 +26,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ status, message, onValidated })
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       submit();
     }
   };
@@ -55,7 +56,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ status, message, onValidated })
           transition={{ duration: 0.8, delay: 0.7 }}
           className="max-w-lg mx-auto"
         >
-          <form className="relative">
+          <div className="relative">
             <div className="relative">
               <input
                 ref={emailRef}
@@ -87,7 +88,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ status, message, onValidated })
                 )}
               </motion.button>
             </div>
-          </form>
+          </div>
           
           <p className="text-sm text-gray-500 mt-4">
             No spam, unsubscribe at any time. Read our{' '}
