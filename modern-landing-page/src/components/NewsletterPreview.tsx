@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CalendarDaysIcon } from '@heroicons/react/24/outline';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { ChevronLeftIcon, ChevronRightIcon, ChartBarIcon, LightBulbIcon, CodeBracketIcon, BugAntIcon, SparklesIcon, PhotoIcon } from '@heroicons/react/24/solid';
 
 interface Issue {
   id: number;
   title: string;
   date: string;
-  preview: string;
+  news: string[];
+  articles: string[];
+  goodFirstIssue: string;
+  repositories: string[];
   topics: string[];
   readTime: string;
-  image: string;
   url: string;
+  uselessFact: string;
+  funImageUrl: string;
+  image?: string;
+  preview?: string;
 }
 
-// Function to extract content snippet from issue HTML
-const extractIssueContent = async (issueUrl: string): Promise<{ title: string; preview: string; topics: string[] }> => {
+// Function to extract structured content from issue HTML
+const extractIssueContent = async (issueUrl: string): Promise<{ title: string; news: string[]; articles: string[]; goodFirstIssue: string; repositories: string[]; topics: string[]; uselessFact: string; funImageUrl: string }> => {
   try {
     // Use CORS proxy for browser requests
     const proxyUrl = 'https://api.allorigins.win/get?url=';
@@ -30,92 +36,128 @@ const extractIssueContent = async (issueUrl: string): Promise<{ title: string; p
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, 'text/html');
     
-    // Extract title - construct from URL
-    const title = `0xCAFE Newsletter - ${issueUrl.replace('/', '')}`;
+    // Extract simplified title
+    const title = `Issue ${issueUrl.replace('/', '').replace('-2025', '')}`;
     
-    // Extract useless fact
-    let uselessFact = '';
-    const factElements = Array.from(doc.querySelectorAll('div')).filter(div => {
-      const text = div.textContent || '';
-      return text.includes('🙈 Useless Fact of the Day');
-    });
-    
-    if (factElements.length > 0) {
-      const factDiv = factElements[0];
-      const factText = factDiv.textContent?.replace('🙈 Useless Fact of the Day', '').trim();
-      if (factText && factText.length > 10) {
-        uselessFact = factText.substring(0, 120) + '....';
-      }
-    }
-    
-    // Extract first news item
-    let firstNews = '';
+    // 1. Extract News
     const newsLinks = Array.from(doc.querySelectorAll('a')).filter(a => {
       const href = a.getAttribute('href') || '';
-      return href.includes('theguardian.com') || href.includes('arstechnica.com') || href.includes('techcrunch.com');
+      return href.includes('theguardian.com') || href.includes('arstechnica.com') || 
+             href.includes('techcrunch.com') || href.includes('reuters.com') || 
+             href.includes('bbc.com') || href.includes('cnn.com') || 
+             href.includes('bloomberg.com') || href.includes('wired.com');
     });
     
-    if (newsLinks.length > 0) {
-      const newsTitle = newsLinks[0].textContent?.trim();
-      if (newsTitle && newsTitle.length > 10) {
-        firstNews = newsTitle.substring(0, 100) + '...';
+    const news = newsLinks.slice(0, 4).map(link => link.textContent?.trim() || '').filter(title => title.length > 0);
+    
+    // 2. Extract Articles
+    const articleLinks = Array.from(doc.querySelectorAll('a')).filter(a => {
+      const href = a.getAttribute('href') || '';
+      const text = a.textContent?.toLowerCase() || '';
+      return (href.includes('medium.com') || href.includes('dev.to') || 
+              href.includes('hackernoon.com') || href.includes('freecodecamp.org') ||
+              text.includes('article') || text.includes('tutorial') || text.includes('guide')) && 
+             !href.includes('github.com') && !newsLinks.includes(a);
+    });
+    
+    const articles = articleLinks.slice(0, 3).map(link => link.textContent?.trim() || '').filter(title => title.length > 0);
+    
+    // 3. Extract Good First Issue
+    let goodFirstIssue = '';
+    const gfiLinks = Array.from(doc.querySelectorAll('a')).filter(a => {
+      const href = a.getAttribute('href') || '';
+      return href.includes('github.com') && href.includes('good-first-issues');
+    });
+    
+    if (gfiLinks.length > 0) {
+      goodFirstIssue = gfiLinks[0].textContent?.trim() || '';
+    } else {
+      // Fallback: look for GitHub issues
+      const issueLinks = Array.from(doc.querySelectorAll('a')).filter(a => {
+        const href = a.getAttribute('href') || '';
+        return href.includes('github.com') && href.includes('/issues/');
+      });
+      if (issueLinks.length > 0) {
+        goodFirstIssue = issueLinks[0].textContent?.trim() || '';
       }
     }
     
-    // Extract GitHub repositories - look for repo names in links
-    let topRepo = '';
+    // 4. Extract Repositories
     const repoLinks = Array.from(doc.querySelectorAll('a')).filter(a => {
       const href = a.getAttribute('href') || '';
-      return href.includes('github.com') && href.split('/').length >= 5;
+      return href.includes('github.com') && href.split('/').length >= 5 && 
+             !href.includes('/issues/') && !href.includes('/pull/') && !href.includes('/blob/');
     });
     
-    // Look for repo names that actually contain "/" (owner/repo format)
+    const repositories: string[] = [];
     for (const link of repoLinks) {
-      const repoName = link.textContent?.trim();
-      if (repoName && repoName.includes('/') && !repoName.includes('http')) {
-        topRepo = repoName;
-        break;
-      }
-    }
-    
-    // If no "/" format found, extract from URL
-    if (!topRepo && repoLinks.length > 0) {
-      const href = repoLinks[0].getAttribute('href') || '';
+      const href = link.getAttribute('href') || '';
       const urlParts = href.split('/');
       if (urlParts.length >= 5) {
         const owner = urlParts[3];
         const repo = urlParts[4];
-        topRepo = `${owner}/${repo}`;
+        const repoName = `${owner}/${repo}`;
+        if (!repositories.includes(repoName) && repositories.length < 5) {
+          repositories.push(repoName);
+        }
       }
     }
     
-    // Construct preview from extracted content
-    let preview = '';
-    if (uselessFact) {
-      preview += `💡 Useless Fact: ${uselessFact} `;
-    }
-    if (firstNews) {
-      preview += `📰 Today: ${firstNews} `;
-    }
-    if (topRepo) {
-      preview += `🚀 Featured: ${topRepo}`;
+    // 5. Extract Useless Fact of the Day
+    let uselessFact = '';
+    // Look for sections that might contain useless facts
+    const allParagraphs = Array.from(doc.querySelectorAll('p'));
+    const factParagraphs = allParagraphs.filter(p => {
+      const text = p.textContent?.toLowerCase() || '';
+      return text.includes('fact') || text.includes('did you know') || 
+             text.includes('trivia') || text.includes('random') ||
+             (text.length > 50 && text.length < 200 && !text.includes('http'));
+    });
+    
+    if (factParagraphs.length > 0) {
+      uselessFact = factParagraphs[0].textContent?.trim() || '';
     }
     
-    // Fallback preview if nothing extracted
-    if (!preview.trim()) {
-      preview = "Today's digest of tech news, trending GitHub repositories, developer tools, and that random fact to impress your colleagues.";
+    // 6. Extract Fun Image URL
+    let funImageUrl = '';
+    // Look for images that might be fun/random images
+    const allImages = Array.from(doc.querySelectorAll('img'));
+    const funImages = allImages.filter(img => {
+      const src = img.getAttribute('src') || '';
+      const alt = img.getAttribute('alt')?.toLowerCase() || '';
+      return src.includes('unsplash') || src.includes('giphy') || 
+             src.includes('imgur') || alt.includes('fun') || 
+             alt.includes('random') || alt.includes('image');
+    });
+    
+    if (funImages.length > 0) {
+      funImageUrl = funImages[0].getAttribute('src') || '';
     }
     
     // Extract topics based on content
     const topics = extractTopicsFromContent(htmlContent);
     
-    return { title, preview: preview.trim(), topics };
+    return { 
+      title, 
+      news, 
+      articles, 
+      goodFirstIssue, 
+      repositories, 
+      topics,
+      uselessFact,
+      funImageUrl
+    };
   } catch (error) {
     console.error(`Failed to fetch content for ${issueUrl}:`, error);
     return {
-      title: `0xCAFE Newsletter - ${issueUrl.replace('/', '')}`,
-      preview: "Your daily dose of curated tech insights, trending repositories, and developer tools.",
-      topics: ["Tech News", "Development", "Tools", "Insights"]
+      title: `Issue ${issueUrl.replace('/', '').replace('-2025', '')}`,
+      news: [],
+      articles: [],
+      goodFirstIssue: '',
+      repositories: [],
+      topics: ["Tech News", "Development", "Tools", "Insights"],
+      uselessFact: '',
+      funImageUrl: ''
     };
   }
 };
@@ -171,12 +213,6 @@ const fetchArchiveIssues = async (): Promise<Issue[]> => {
       { url: '/16-Jul-2025', date: 'July 16, 2025' }
     ];
     
-    const images = [
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop&auto=format&q=80",
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop&auto=format&q=80",
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop&auto=format&q=80"
-    ];
-    
     // Extract content for each issue
     const issuePromises = issueUrls.map(async (issueData, index) => {
       const extracted = await extractIssueContent(issueData.url);
@@ -185,11 +221,15 @@ const fetchArchiveIssues = async (): Promise<Issue[]> => {
         id: index + 1,
         title: extracted.title,
         date: issueData.date,
-        preview: extracted.preview,
+        news: extracted.news,
+        articles: extracted.articles,
+        goodFirstIssue: extracted.goodFirstIssue,
+        repositories: extracted.repositories,
         topics: extracted.topics,
         readTime: "~10 min read",
-        image: images[index],
-        url: issueData.url
+        url: issueData.url,
+        uselessFact: extracted.uselessFact,
+        funImageUrl: extracted.funImageUrl
       };
     });
     
@@ -199,7 +239,7 @@ const fetchArchiveIssues = async (): Promise<Issue[]> => {
     return recentIssues;
   } catch (error) {
     console.error('Failed to fetch archive issues:', error);
-    return fallbackIssues;
+    return [];
   }
 };
 
@@ -218,43 +258,10 @@ const formatDate = (dateStr: string): string => {
   }
 };
 
-// Fallback issues in case fetching fails
-const fallbackIssues: Issue[] = [
-  {
-    id: 1,
-    title: "Latest Tech Insights & Developer Updates",
-    date: "July 18, 2025",
-    preview: "Daily dose of tech insights, trending repositories, must-read articles, and developer tools to keep you ahead in the fast-moving world of technology...",
-    topics: ["Tech News", "Development", "AI", "Open Source"],
-    readTime: "~10 min read",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop&auto=format",
-    url: "/18-Jul-2025"
-  },
-  {
-    id: 2,
-    title: "Weekly Developer Digest",
-    date: "July 17, 2025",
-    preview: "Curated selection of the week's best programming articles, GitHub repositories, tech news, and tools that matter to developers...",
-    topics: ["Programming", "GitHub", "Tools", "News"],
-    readTime: "~10 min read",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop&auto=format",
-    url: "/17-Jul-2025"
-  },
-  {
-    id: 3,
-    title: "Morning Tech Brief",
-    date: "July 16, 2025",
-    preview: "Your morning dose of developer insights, trending projects, useful resources, and everything you need to stay updated in tech...",
-    topics: ["Development", "Resources", "Trends", "Updates"],
-    readTime: "~10 min read",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop&auto=format",
-    url: "/16-Jul-2025"
-  }
-];
 
 const NewsletterPreview: React.FC = () => {
   const [currentIssue, setCurrentIssue] = useState(0);
-  const [issues, setIssues] = useState<Issue[]>(fallbackIssues);
+  const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -265,7 +272,7 @@ const NewsletterPreview: React.FC = () => {
         setIssues(fetchedIssues);
       } catch (error) {
         console.error('Error loading issues:', error);
-        setIssues(fallbackIssues);
+        setIssues([]); // Clear issues on error
       } finally {
         setLoading(false);
       }
@@ -361,20 +368,9 @@ const NewsletterPreview: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-3xl overflow-hidden hover:border-gray-700 transition-all duration-300"
             >
-            <div className="md:flex">
-              {/* Issue image */}
-              <div className="md:w-2/5">
-                <img
-                  src={issue.image}
-                  alt={issue.title}
-                  className="w-full h-64 md:h-full object-cover"
-                />
-              </div>
-
-              {/* Issue content */}
-              <div className="md:w-3/5 p-8">
+              <div className="p-8">
                 {/* Issue header */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2 text-sm text-gray-400">
                     <CalendarDaysIcon className="w-4 h-4" />
                     {issue.date}
@@ -385,17 +381,12 @@ const NewsletterPreview: React.FC = () => {
                 </div>
 
                 {/* Issue title */}
-                <h3 className="font-poppins font-bold text-2xl md:text-3xl text-white mb-4 leading-tight">
-                  {issue.title}
+                <h3 className="font-poppins font-bold text-3xl md:text-4xl text-white mb-8 leading-tight">
+                  Issue #{issue.url.replace('/', '').replace('-Jul-2025', '').replace('-2025', '')}
                 </h3>
 
-                {/* Issue preview */}
-                <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                  {issue.preview}
-                </p>
-
                 {/* Topics */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {issue.topics.map((topic, index) => (
                     <span
                       key={index}
@@ -406,19 +397,117 @@ const NewsletterPreview: React.FC = () => {
                   ))}
                 </div>
 
+                {/* Issue content sections */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  {/* News Section */}
+                  {issue.news.length > 0 && (
+                    <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-4">
+                        <ChartBarIcon className="w-6 h-6 text-cafe-400" />
+                        <h4 className="font-poppins font-semibold text-lg text-white">Tech News</h4>
+                      </div>
+                      <div className="space-y-3">
+                        {issue.news.map((newsItem, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            <div className="w-2 h-2 bg-cafe-400 rounded-full mt-2 flex-shrink-0"></div>
+                            <p className="text-gray-300 text-sm leading-relaxed">{newsItem}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Articles Section */}
+                  {issue.articles.length > 0 && (
+                    <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-4">
+                        <LightBulbIcon className="w-6 h-6 text-purple-400" />
+                        <h4 className="font-poppins font-semibold text-lg text-white">Must-Read Articles</h4>
+                      </div>
+                      <div className="space-y-3">
+                        {issue.articles.map((article, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+                            <p className="text-gray-300 text-sm leading-relaxed">{article}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Repositories Section */}
+                  {issue.repositories.length > 0 && (
+                    <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-4">
+                        <CodeBracketIcon className="w-6 h-6 text-green-400" />
+                        <h4 className="font-poppins font-semibold text-lg text-white">Trending Repos</h4>
+                      </div>
+                      <div className="space-y-3">
+                        {issue.repositories.map((repo, index) => (
+                          <div key={index} className="flex items-center gap-3 p-2 bg-gray-700/30 rounded-lg hover:bg-gray-700/50 transition-colors duration-200">
+                            <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
+                            <code className="text-green-400 font-mono text-sm">{repo}</code>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Good First Issue Section */}
+                  {issue.goodFirstIssue && (
+                    <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-4">
+                        <BugAntIcon className="w-6 h-6 text-yellow-400" />
+                        <h4 className="font-poppins font-semibold text-lg text-white">Good First Issue</h4>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-gray-300 text-sm leading-relaxed">{issue.goodFirstIssue}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Useless Fact Section */}
+                  <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition-all duration-300">
+                    <div className="flex items-center gap-3 mb-4">
+                      <SparklesIcon className="w-6 h-6 text-indigo-400" />
+                      <h4 className="font-poppins font-semibold text-lg text-white">Useless Fact of the Day</h4>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
+                      {issue.uselessFact ? (
+                        <p className="text-gray-300 text-sm leading-relaxed">{issue.uselessFact}</p>
+                      ) : (
+                        <p className="text-gray-300 text-sm leading-relaxed italic">"A random, delightfully pointless fact to brighten your day and impress your colleagues."</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Fun Image Section */}
+                  <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition-all duration-300">
+                    <div className="flex items-center gap-3 mb-4">
+                      <PhotoIcon className="w-6 h-6 text-pink-400" />
+                      <h4 className="font-poppins font-semibold text-lg text-white">Random Fun Image</h4>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-pink-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-300 text-sm leading-relaxed italic">"A surprise image to add a smile to your tech-filled day."</p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Actions */}
                 <div className="flex justify-end">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => window.open(`https://archive.0xcafe.news${issue.url}`, '_blank')}
-                    className="bg-gradient-to-r from-cafe-400 to-cafe-500 hover:from-cafe-500 hover:to-cafe-600 text-black font-semibold px-6 py-2 rounded-xl transition-all duration-300"
+                    className="bg-gradient-to-r from-cafe-400 to-cafe-500 hover:from-cafe-500 hover:to-cafe-600 text-black font-semibold px-6 py-3 rounded-xl transition-all duration-300"
                   >
                     Read Full Issue
                   </motion.button>
                 </div>
               </div>
-            </div>
             </motion.div>
           )}
 
