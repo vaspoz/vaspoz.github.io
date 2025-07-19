@@ -114,15 +114,15 @@ const Features: React.FC = () => {
               <div className="text-gray-400">Active Readers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2">89%</div>
-              <div className="text-gray-400">Open Rate</div>
+              <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2">5 days</div>
+              <div className="text-gray-400">Per Week</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-green-400 mb-2">5min</div>
+              <div className="text-3xl md:text-4xl font-bold text-green-400 mb-2">~10min</div>
               <div className="text-gray-400">Read Time</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">156</div>
+              <div className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">600+</div>
               <div className="text-gray-400">Issues Sent</div>
             </div>
           </div>
