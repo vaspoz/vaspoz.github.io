@@ -519,6 +519,19 @@ const NewsletterPreview: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-2xl transition-all duration-300"
+              onClick={() => {
+                const heroSection = document.querySelector('section');
+                if (heroSection) {
+                  heroSection.scrollIntoView({ behavior: 'smooth' });
+                  // Focus the email input after scrolling
+                  setTimeout(() => {
+                    const emailInput = document.querySelector('input[type="email"]') as HTMLInputElement;
+                    if (emailInput) {
+                      emailInput.focus();
+                    }
+                  }, 800); // Wait for smooth scroll to complete
+                }
+              }}
             >
               Subscribe Now - It's Free
             </motion.button>

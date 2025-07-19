@@ -186,6 +186,13 @@ const Testimonials: React.FC = () => {
                 const heroSection = document.querySelector('section');
                 if (heroSection) {
                   heroSection.scrollIntoView({ behavior: 'smooth' });
+                  // Focus the email input after scrolling
+                  setTimeout(() => {
+                    const emailInput = document.querySelector('input[type="email"]') as HTMLInputElement;
+                    if (emailInput) {
+                      emailInput.focus();
+                    }
+                  }, 800); // Wait for smooth scroll to complete
                 }
               }}
             >
