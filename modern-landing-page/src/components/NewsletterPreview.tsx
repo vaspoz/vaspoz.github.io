@@ -127,21 +127,8 @@ const extractIssueContent = async (issueUrl: string): Promise<{ title: string; n
       }
     }
     
-    // 6. Extract Fun Image URL
+    // 6. Fun Image - Skip fetching, will show message instead
     let funImageUrl = '';
-    // Look for images that might be fun/random images
-    const allImages = Array.from(doc.querySelectorAll('img'));
-    const funImages = allImages.filter(img => {
-      const src = img.getAttribute('src') || '';
-      const alt = img.getAttribute('alt')?.toLowerCase() || '';
-      return src.includes('unsplash') || src.includes('giphy') || 
-             src.includes('imgur') || alt.includes('fun') || 
-             alt.includes('random') || alt.includes('image');
-    });
-    
-    if (funImages.length > 0) {
-      funImageUrl = funImages[0].getAttribute('src') || '';
-    }
     
     // Extract topics based on content
     const topics = extractTopicsFromContent(htmlContent);
@@ -469,8 +456,7 @@ const NewsletterPreview: React.FC = () => {
                         <BugAntIcon className="w-6 h-6 text-yellow-400" />
                         <h4 className="font-poppins font-semibold text-lg text-white">Good First Issue</h4>
                       </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
                         <p className="text-gray-300 text-sm leading-relaxed">{issue.goodFirstIssue}</p>
                       </div>
                     </div>
@@ -482,8 +468,7 @@ const NewsletterPreview: React.FC = () => {
                       <SparklesIcon className="w-6 h-6 text-indigo-400" />
                       <h4 className="font-poppins font-semibold text-lg text-white">Useless Fact of the Day</h4>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
                       {issue.uselessFact ? (
                         <p className="text-gray-300 text-sm leading-relaxed">{issue.uselessFact}</p>
                       ) : (
@@ -498,9 +483,8 @@ const NewsletterPreview: React.FC = () => {
                       <PhotoIcon className="w-6 h-6 text-pink-400" />
                       <h4 className="font-poppins font-semibold text-lg text-white">Random Fun Image</h4>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-pink-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-300 text-sm leading-relaxed italic">"A surprise image to add a smile to your tech-filled day."</p>
+                    <div>
+                      <p className="text-gray-300 text-sm leading-relaxed">To enjoy it, read the full issue!</p>
                     </div>
                   </div>
                 </div>
