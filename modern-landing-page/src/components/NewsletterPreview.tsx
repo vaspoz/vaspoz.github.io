@@ -199,15 +199,64 @@ const extractTopicsFromContent = (htmlContent: string): string[] => {
   return topics;
 };
 
-// Function to fetch archive links from the archive page
-const fetchArchiveIssues = async (): Promise<Issue[]> => {
+// Function to fetch latest issue URLs from archive page
+const fetchLatestIssueUrls = async (): Promise<{ url: string; date: string }[]> => {
   try {
-    // Define the recent issue URLs to fetch
-    const issueUrls = [
+    const proxyUrl = 'https://api.allorigins.win/get?url=';
+    const response = await fetch(proxyUrl + encodeURIComponent('https://archive.0xcafe.news'));
+    const data = await response.json();
+    const htmlContent = data.contents;
+    
+    if (!htmlContent) {
+      throw new Error('No content received from archive page');
+    }
+    
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    
+    // Find all links that match the date pattern (e.g., "18-Jul-2025")
+    const datePattern = /^\d{1,2}-[A-Za-z]{3}-\d{4}$/;
+    const archiveLinks = Array.from(doc.querySelectorAll('a'))
+      .map(link => link.textContent?.trim())
+      .filter(text => text && datePattern.test(text))
+      .slice(0, 3); // Get the first 3 (latest) issues
+    
+    // Convert to the format we need
+    return archiveLinks.map(dateStr => {
+      if (!dateStr) return { url: '', date: '' };
+      
+      // Parse date string like "18-Jul-2025"
+      const [day, monthAbbr, year] = dateStr.split('-');
+      const monthMap: { [key: string]: string } = {
+        'Jan': 'January', 'Feb': 'February', 'Mar': 'March', 'Apr': 'April',
+        'May': 'May', 'Jun': 'June', 'Jul': 'July', 'Aug': 'August',
+        'Sep': 'September', 'Oct': 'October', 'Nov': 'November', 'Dec': 'December'
+      };
+      
+      const monthName = monthMap[monthAbbr] || monthAbbr;
+      const formattedDate = `${monthName} ${parseInt(day)}, ${year}`;
+      
+      return {
+        url: `/${dateStr}`,
+        date: formattedDate
+      };
+    });
+  } catch (error) {
+    console.error('Failed to fetch archive page:', error);
+    // Fallback to hardcoded recent issues
+    return [
       { url: '/18-Jul-2025', date: 'July 18, 2025' },
       { url: '/17-Jul-2025', date: 'July 17, 2025' },
       { url: '/16-Jul-2025', date: 'July 16, 2025' }
     ];
+  }
+};
+
+// Function to fetch archive links from the archive page
+const fetchArchiveIssues = async (): Promise<Issue[]> => {
+  try {
+    // Dynamically fetch the latest issue URLs from archive page
+    const issueUrls = await fetchLatestIssueUrls();
     
     // Extract content for each issue
     const issuePromises = issueUrls.map(async (issueData, index) => {
@@ -238,22 +287,6 @@ const fetchArchiveIssues = async (): Promise<Issue[]> => {
     return [];
   }
 };
-
-// Helper function to format date
-const formatDate = (dateStr: string): string => {
-  try {
-    const [day, month, year] = dateStr.split('-');
-    const monthNames = {
-      'Jan': 'January', 'Feb': 'February', 'Mar': 'March', 'Apr': 'April',
-      'May': 'May', 'Jun': 'June', 'Jul': 'July', 'Aug': 'August',
-      'Sep': 'September', 'Oct': 'October', 'Nov': 'November', 'Dec': 'December'
-    };
-    return `${monthNames[month as keyof typeof monthNames]} ${parseInt(day)}, ${year}`;
-  } catch {
-    return dateStr;
-  }
-};
-
 
 const NewsletterPreview: React.FC = () => {
   const [currentIssue, setCurrentIssue] = useState(0);
