@@ -4,47 +4,47 @@ import {
   LightBulbIcon, 
   ChartBarIcon, 
   CodeBracketIcon, 
-  GlobeAltIcon,
-  ShieldCheckIcon,
-  ClockIcon 
-} from '@heroicons/react/24/outline';
+  BugAntIcon,
+  SparklesIcon,
+  PhotoIcon 
+} from '@heroicons/react/24/solid';
 
 const features = [
   {
-    icon: CodeBracketIcon,
-    title: "Useless Fact of the Day",
-    description: "Start your morning with a fun, random fact that will make you the most interesting person at the coffee machine.",
-    gradient: "from-yellow-400 to-orange-500"
-  },
-  {
     icon: ChartBarIcon,
-    title: "Breaking Tech News",
+    title: "Tech News",
     description: "Curated tech news from AI breakthroughs to security alerts, keeping you informed on what actually matters.",
-    gradient: "from-blue-400 to-purple-500"
+    color: "text-cafe-400"
   },
   {
     icon: LightBulbIcon,
     title: "Must-Read Articles",
     description: "Handpicked in-depth articles and guides from Laravel tutorials to debugging mindsets that level up your skills.",
-    gradient: "from-green-400 to-teal-500"
+    color: "text-purple-400"
   },
   {
-    icon: GlobeAltIcon,
-    title: "Trending Repositories",
+    icon: CodeBracketIcon,
+    title: "Trending Repos",
     description: "Discover the hottest GitHub repos before they go viral—from pixel fonts to AI bot platforms.",
-    gradient: "from-pink-400 to-rose-500"
+    color: "text-green-400"
   },
   {
-    icon: ShieldCheckIcon,
-    title: "Good First GitHub Issue",
+    icon: BugAntIcon,
+    title: "Good First Issue",
     description: "Perfect beginner-friendly open source contributions to help you start or grow your GitHub profile.",
-    gradient: "from-indigo-400 to-purple-500"
+    color: "text-yellow-400"
   },
   {
-    icon: ClockIcon,
-    title: "Random Delight",
+    icon: SparklesIcon,
+    title: "Useless Fact of the Day",
+    description: "Start your morning with a fun, random fact that will make you the most interesting person at the coffee machine.",
+    color: "text-indigo-400"
+  },
+  {
+    icon: PhotoIcon,
+    title: "Random Fun Image",
     description: "A surprise image, meme, or visual treat to brighten your day. Because tech doesn't have to be all serious.",
-    gradient: "from-cyan-400 to-blue-500"
+    color: "text-pink-400"
   }
 ];
 
@@ -78,22 +78,29 @@ const Features: React.FC = () => {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all duration-300 group"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.7, 
+                delay: index * 0.15,
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+              whileHover={{ 
+                y: -10,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
+              className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-colors duration-300 group cursor-pointer"
             >
-              <div className={`w-16 h-16 bg-gradient-to-r ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="w-8 h-8 text-white" />
+              <div className="mb-6">
+                <feature.icon className={`w-12 h-12 ${feature.color}`} />
               </div>
               
-              <h3 className="font-poppins font-semibold text-xl text-white mb-4">
+              <h3 className="font-poppins font-semibold text-xl text-white mb-4 group-hover:text-gray-100 transition-colors duration-300">
                 {feature.title}
               </h3>
               
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
                 {feature.description}
               </p>
             </motion.div>
