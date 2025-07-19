@@ -72,8 +72,8 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            Join <span className="text-cafe-400 font-semibold">3,247+ developers</span> who get curated tech insights, 
-            breakthrough discoveries, and industry trends that actually matter.
+            Join <span className="text-cafe-400 font-semibold">3,247+ developers</span> who start their weekdays with 
+            breaking tech news, trending GitHub repos, fun facts, and everything you need to stay ahead.
           </motion.p>
 
           {/* Social Proof Icons */}
