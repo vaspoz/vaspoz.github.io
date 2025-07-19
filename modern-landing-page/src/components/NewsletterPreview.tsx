@@ -105,17 +105,26 @@ const extractIssueContent = async (issueUrl: string): Promise<{ title: string; n
     
     // 5. Extract Useless Fact of the Day
     let uselessFact = '';
-    // Look for sections that might contain useless facts
-    const allParagraphs = Array.from(doc.querySelectorAll('p'));
-    const factParagraphs = allParagraphs.filter(p => {
-      const text = p.textContent?.toLowerCase() || '';
-      return text.includes('fact') || text.includes('did you know') || 
-             text.includes('trivia') || text.includes('random') ||
-             (text.length > 50 && text.length < 200 && !text.includes('http'));
+    // Look for div containing "Useless Fact of the Day" string
+    const allDivs = Array.from(doc.querySelectorAll('div'));
+    const factHeaderDiv = allDivs.find(div => {
+      const text = div.textContent?.toLowerCase() || '';
+      return text.includes('useless fact of the day');
     });
     
-    if (factParagraphs.length > 0) {
-      uselessFact = factParagraphs[0].textContent?.trim() || '';
+    if (factHeaderDiv && factHeaderDiv.parentElement) {
+      // The fact content is in a sibling div within the same parent container
+      const parentDiv = factHeaderDiv.parentElement;
+      const contentDivs = Array.from(parentDiv.querySelectorAll('div'));
+      // Find a div that contains actual content (not the header)
+      const factContentDiv = contentDivs.find(div => {
+        const text = div.textContent?.trim() || '';
+        return text.length > 20 && !text.toLowerCase().includes('useless fact of the day');
+      });
+      
+      if (factContentDiv) {
+        uselessFact = factContentDiv.textContent?.trim() || '';
+      }
     }
     
     // 6. Extract Fun Image URL
