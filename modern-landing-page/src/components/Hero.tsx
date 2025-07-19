@@ -1,24 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { UserGroupIcon, SparklesIcon, RocketLaunchIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
-import { ChevronRightIcon, SparklesIcon, UserGroupIcon, RocketLaunchIcon } from '@heroicons/react/24/solid';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
 
-const Hero: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+const MAILCHIMP_URL = "https://news.us21.list-manage.com/subscribe/post?u=feba530ea1bb640b3bbbc4977&id=e90c057e68&f_id=00cff5e6f0";
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) return;
-    
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsSubmitted(true);
-    setIsSubmitting(false);
+interface CustomFormProps {
+  status: 'sending' | 'error' | 'success' | null;
+  message: string | Error | null;
+  onValidated: (data: { EMAIL: string }) => void;
+}
+
+const CustomForm: React.FC<CustomFormProps> = ({ status, message, onValidated }) => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const [hover, setHover] = useState(false);
+
+  const submit = () => {
+    if (emailRef.current && emailRef.current.value.indexOf('@') > -1) {
+      onValidated({
+        EMAIL: emailRef.current.value,
+      });
+    }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      submit();
+    }
+  };
+
+  return (
+    <>
+      {status === "error" && (
+        <div className="text-red-400 text-sm mt-2">
+          <div dangerouslySetInnerHTML={{ __html: typeof message === 'string' ? message : 'An error occurred' }} />
+        </div>
+      )}
+      {status === "success" ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-lg mx-auto bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-2xl p-8"
+        >
+          <div className="text-4xl mb-4">🎉</div>
+          <h3 className="text-2xl font-bold text-green-400 mb-2">Welcome aboard!</h3>
+          <div className="text-gray-300" dangerouslySetInnerHTML={{ __html: typeof message === 'string' ? message : 'Success!' }} />
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="max-w-lg mx-auto"
+        >
+          <form className="relative">
+            <div className="relative">
+              <input
+                ref={emailRef}
+                type="email"
+                placeholder="Enter your email address"
+                name="EMAIL"
+                className="w-full bg-black/50 backdrop-blur-sm border-2 border-gray-800 focus:border-cafe-400 rounded-2xl px-6 py-4 text-lg transition-all duration-300 focus:outline-none focus:ring-0 placeholder-gray-500"
+                required
+                autoFocus
+                onKeyPress={handleKeyPress}
+              />
+              <motion.button
+                type="button"
+                onClick={submit}
+                disabled={status === "sending"}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute right-2 top-2 bg-gradient-to-r from-cafe-400 to-cafe-500 hover:from-cafe-500 hover:to-cafe-600 text-black font-semibold px-8 py-3 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                {status === "sending" ? (
+                  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <>
+                    Subscribe
+                    <ChevronRightIcon className="w-4 h-4" />
+                  </>
+                )}
+              </motion.button>
+            </div>
+          </form>
+          
+          <p className="text-sm text-gray-500 mt-4">
+            No spam, unsubscribe at any time. Read our{' '}
+            <Link to="/privacy" className="text-cafe-400 hover:underline">privacy policy</Link>.
+          </p>
+        </motion.div>
+      )}
+    </>
+  );
+};
+
+const Hero: React.FC = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black">
       {/* Animated background elements */}
@@ -72,7 +153,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            Join <span className="text-cafe-400 font-semibold">3,247+ developers</span> who start their weekdays with 
+            Join <span className="text-cafe-400 font-semibold">1,247+ developers</span> who start their weekdays with 
             breaking tech news, trending GitHub repos, fun facts, and everything you need to stay ahead.
           </motion.p>
 
@@ -85,7 +166,7 @@ const Hero: React.FC = () => {
           >
             <div className="flex items-center gap-2 text-gray-400">
               <UserGroupIcon className="w-6 h-6 text-cafe-400" />
-              <span>3,247+ Readers</span>
+              <span>1,247+ Readers</span>
             </div>
             <div className="flex items-center gap-2 text-gray-400">
               <SparklesIcon className="w-6 h-6 text-purple-400" />
@@ -98,61 +179,16 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Newsletter Signup Form */}
-          {!isSubmitted ? (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="max-w-lg mx-auto"
-            >
-              <form onSubmit={handleSubmit} className="relative">
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email address"
-                    className="w-full bg-black/50 backdrop-blur-sm border-2 border-gray-800 focus:border-cafe-400 rounded-2xl px-6 py-4 text-lg transition-all duration-300 focus:outline-none focus:ring-0 placeholder-gray-500"
-                    required
-                  />
-                  <motion.button
-                    type="submit"
-                    disabled={isSubmitting || !email}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="absolute right-2 top-2 bg-gradient-to-r from-cafe-400 to-cafe-500 hover:from-cafe-500 hover:to-cafe-600 text-black font-semibold px-8 py-3 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                    ) : (
-                      <>
-                        Subscribe
-                        <ChevronRightIcon className="w-4 h-4" />
-                      </>
-                    )}
-                  </motion.button>
-                </div>
-              </form>
-              
-              <p className="text-sm text-gray-500 mt-4">
-                No spam, unsubscribe at any time. Read our{' '}
-                <Link to="/privacy" className="text-cafe-400 hover:underline">privacy policy</Link>.
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-lg mx-auto bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-2xl p-8"
-            >
-              <div className="text-4xl mb-4">🎉</div>
-              <h3 className="text-2xl font-bold text-green-400 mb-2">Welcome aboard!</h3>
-              <p className="text-gray-300">
-                Check your inbox for a welcome email. Your first issue arrives this week!
-              </p>
-            </motion.div>
-          )}
+          <MailchimpSubscribe
+            url={MAILCHIMP_URL}
+            render={({ subscribe, status, message }: any) => (
+              <CustomForm
+                status={status}
+                message={message}
+                onValidated={(formData: { EMAIL: string }) => subscribe(formData)}
+              />
+            )}
+          />
 
         </motion.div>
       </div>
