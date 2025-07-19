@@ -11,39 +11,39 @@ import {
 
 const features = [
   {
-    icon: LightBulbIcon,
-    title: "Tech Breakthroughs",
-    description: "Stay ahead with cutting-edge innovations and emerging technologies that will shape tomorrow.",
+    icon: CodeBracketIcon,
+    title: "Useless Fact of the Day",
+    description: "Start your morning with a fun, random fact that will make you the most interesting person at the coffee machine.",
     gradient: "from-yellow-400 to-orange-500"
   },
   {
-    icon: CodeBracketIcon,
-    title: "Developer Tools",
-    description: "Discover new libraries, frameworks, and tools that can supercharge your development workflow.",
+    icon: ChartBarIcon,
+    title: "Breaking Tech News",
+    description: "Curated tech news from AI breakthroughs to security alerts, keeping you informed on what actually matters.",
     gradient: "from-blue-400 to-purple-500"
   },
   {
-    icon: ChartBarIcon,
-    title: "Industry Insights",
-    description: "Get data-driven analysis of tech trends, market movements, and startup ecosystem updates.",
+    icon: LightBulbIcon,
+    title: "Must-Read Articles",
+    description: "Handpicked in-depth articles and guides from Laravel tutorials to debugging mindsets that level up your skills.",
     gradient: "from-green-400 to-teal-500"
   },
   {
     icon: GlobeAltIcon,
-    title: "Global Perspective",
-    description: "Understand how technology impacts different regions and cultures around the world.",
+    title: "Trending Repositories",
+    description: "Discover the hottest GitHub repos before they go viral—from pixel fonts to AI bot platforms.",
     gradient: "from-pink-400 to-rose-500"
   },
   {
     icon: ShieldCheckIcon,
-    title: "Curated Quality",
-    description: "Every piece of content is hand-picked and verified by our team of tech experts.",
+    title: "Good First GitHub Issue",
+    description: "Perfect beginner-friendly open source contributions to help you start or grow your GitHub profile.",
     gradient: "from-indigo-400 to-purple-500"
   },
   {
     icon: ClockIcon,
-    title: "Time-Efficient",
-    description: "Get everything you need to know in just 5 minutes. Delivered Monday-Friday, perfect for busy professionals.",
+    title: "Random Delight",
+    description: "A surprise image, meme, or visual treat to brighten your day. Because tech doesn't have to be all serious.",
     gradient: "from-cyan-400 to-blue-500"
   }
 ];
