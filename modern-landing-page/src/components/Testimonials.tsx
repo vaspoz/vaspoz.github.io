@@ -176,7 +176,7 @@ const Testimonials: React.FC = () => {
             </h3>
             <p className="text-gray-300 mb-6">
               Start your mornings with the tech insights that matter. 
-              Join 3,247+ developers who never miss an issue.
+              Join 1,247+ developers who never miss an issue.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
