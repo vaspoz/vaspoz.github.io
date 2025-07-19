@@ -127,36 +127,63 @@ export default function HomepageHeader(): JSX.Element {
         }}
       />
       <div className="container">
-        <div className="row">
-          <div className="col">
-            <span
-              className={classNames(
-                styles.text,
-                styles["text-big"],
-                styles.title,
-              )}
-            >
-              {siteConfig.title}
-            </span>
-            <h1
-              className={classNames(
-                styles.description,
-                styles.text,
-                styles["text-huge"],
-              )}
-            >
-              The only newsletter you need to stay updated with latest
+        <div className={styles.heroContent}>
+          {/* Main CTA Section */}
+          <div className={styles.ctaSection}>
+            <div className={styles.brandSection}>
+              <div className={styles.logoContainer}>
+                <span className={styles.logoEmoji}>☕</span>
+                <span className={styles.brandName}>{siteConfig.title}</span>
+              </div>
+              <div className={styles.badge}>Tech & Science Newsletter</div>
+            </div>
+            
+            <h1 className={styles.heroTitle}>
+              Stay ahead with the 
+              <span className={styles.highlight}> latest tech insights</span>
             </h1>
-            <ul className={classNames(styles.bullets)}>
-              <li>📰 News</li>
-              <li>📚 Articles</li>
-              <li>🤷‍♂️ Useless fact</li>
-              <li>👨‍💻 GitHub repositories</li>
-              <li>🖼️ Random images</li>
-            </ul>
-            <Form />
+            
+            <p className={styles.heroSubtitle}>
+              Join <strong>2,500+</strong> developers, engineers, and tech enthusiasts who trust 0xCAFE 
+              for curated content that matters. No spam, just quality.
+            </p>
+
+            <div className={styles.valueProps}>
+              <div className={styles.valueProp}>
+                <span className={styles.valueIcon}>🚀</span>
+                <span>Latest tech news</span>
+              </div>
+              <div className={styles.valueProp}>
+                <span className={styles.valueIcon}>📚</span>
+                <span>In-depth articles</span>
+              </div>
+              <div className={styles.valueProp}>
+                <span className={styles.valueIcon}>💡</span>
+                <span>GitHub discoveries</span>
+              </div>
+              <div className={styles.valueProp}>
+                <span className={styles.valueIcon}>🎯</span>
+                <span>Weekly delivery</span>
+              </div>
+            </div>
+
+            <div className={styles.ctaContainer}>
+              <Form />
+              <div className={styles.socialProof}>
+                <div className={styles.testimonialQuote}>
+                  "Best tech newsletter I've subscribed to. Always high quality content!" 
+                  <span className={styles.testimonialAuthor}>- Sarah K., Senior Developer</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col">
+
+          {/* Preview Section */}
+          <div className={styles.previewSection}>
+            <div className={styles.previewHeader}>
+              <h3>📰 Latest Issue Preview</h3>
+              <div className={styles.previewBadge}>Fresh this week</div>
+            </div>
             <LatestIssue />
           </div>
         </div>
