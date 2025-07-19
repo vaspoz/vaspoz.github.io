@@ -15,35 +15,35 @@ const testimonials: Testimonial[] = [
     name: "Gustavo Goulart",
     content: "Thanks for bring back the issue every weekday! I used to read while enjoying my morning coffee so happy that I can do it again! Very nice job, I'm a fan!",
     subscribeDate: "Sep 16, 2024",
-    avatar: "GG",
+    avatar: "/testimonials/gustavogoulart.jpg",
     role: "Software Engineer"
   },
   {
     name: "Mitesh Patel", 
     content: "Hey Basil, I just wanted to say how much I enjoy the 0xCAFE newsletter! Your witty commentary and insightful updates always make a good start to the day. The mix of tech news, quirky stories, puzzles and code repos keeps things fresh and engaging.",
     subscribeDate: "May 24, 2024",
-    avatar: "MP",
+    avatar: "/testimonials/miteshpatel.png",
     role: "Tech Lead"
   },
   {
     name: "Mauro Baso",
     content: "What I can say is that 0xCAFE newsletter is now part of my morning routine and the basis of my daily inspirational voyage. Too often we are diving so deep we forget to take a breath and look around, to remember to enjoy the journey as we head towards our destination. This is your work to me: a look at the world from the window and an inestimable tool for lateral thinking. Thank you for your commitment, never enough appreciated.",
     subscribeDate: "Jan 29, 2024", 
-    avatar: "MB",
+    avatar: "/testimonials/maurobaso.png",
     role: "Senior Developer"
   },
   {
     name: "Andy Alexis",
     content: "I like all of the general interest tech articles you share; I am retired from programming so the repositories are no longer of interest to me, but I remember being excited about reading about them when I was a programmer. This is a high quality newsletter and I look forward to reading it every day.",
     subscribeDate: "Jun 16, 2024",
-    avatar: "AA",
+    avatar: "/testimonials/andyalexis.jpg",
     role: "Retired Programmer"
   },
   {
     name: "Michael Thomas Ross",
     content: "Love your work, favourite newsletter of 40.",
     subscribeDate: "Jun 17, 2024",
-    avatar: "MR",
+    avatar: "/testimonials/michaelthomasross.jpg",
     role: "Developer"
   },
   {
@@ -106,16 +106,6 @@ const Testimonials: React.FC = () => {
             Join thousands of developers who start their weekdays with 0xCAFE. 
             Here's what they're saying about their regular dose of tech insights.
           </p>
-          
-          {/* Rating */}
-          <div className="flex items-center justify-center gap-2 mt-8">
-            <div className="flex gap-1">
-              {[...Array(5)].map((_, i) => (
-                <StarIcon key={i} className="w-6 h-6 text-yellow-400" />
-              ))}
-            </div>
-            <span className="text-gray-300 ml-2">4.9/5 from 500+ readers</span>
-          </div>
         </motion.div>
 
         {/* Testimonials Grid */}
@@ -149,9 +139,17 @@ const Testimonials: React.FC = () => {
 
                   {/* Author */}
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-r from-cafe-400 to-purple-400 rounded-full flex items-center justify-center font-bold text-black text-sm group-hover:scale-110 transition-transform duration-300">
-                      {testimonial.avatar}
-                    </div>
+                    {testimonial.avatar.startsWith('/') ? (
+                      <img 
+                        src={testimonial.avatar} 
+                        alt={testimonial.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-cafe-400/30 group-hover:scale-110 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gradient-to-r from-cafe-400 to-purple-400 rounded-full flex items-center justify-center font-bold text-black text-sm group-hover:scale-110 transition-transform duration-300">
+                        {testimonial.avatar}
+                      </div>
+                    )}
                     <div>
                       <div className="font-semibold text-white">{testimonial.name}</div>
                       <div className="text-sm text-gray-400">{testimonial.role}</div>
