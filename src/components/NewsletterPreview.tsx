@@ -24,9 +24,7 @@ interface Issue {
 // Function to extract structured content from issue HTML
 const extractIssueContent = async (issueUrl: string): Promise<{ title: string; news: string[]; articles: string[]; goodFirstIssue: string; repositories: string[]; topics: string[]; uselessFact: string; funImageUrl: string }> => {
   try {
-    // Use CORS proxy for browser requests
-    const proxyUrl = 'https://api.allorigins.win/get?url=';
-    const response = await fetch(proxyUrl + encodeURIComponent(`https://archive.0xcafe.news${issueUrl}`));
+    const response = await fetch(`https://archive.0xcafe.news${issueUrl}`);
     const data = await response.json();
     const htmlContent = data.contents;
     
