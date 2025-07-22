@@ -25,11 +25,10 @@ interface Issue {
 const extractIssueContent = async (issueUrl: string): Promise<{ title: string; news: string[]; articles: string[]; goodFirstIssue: string; repositories: string[]; topics: string[]; uselessFact: string; funImageUrl: string }> => {
   try {
     const response = await fetch(`https://archive.0xcafe.news${issueUrl}`);
-    const data = await response.json();
-    const htmlContent = data.contents;
+    const htmlContent = await response.text();
     
     if (!htmlContent) {
-      throw new Error('No content received from proxy');
+      throw new Error('No content received from API');
     }
     
     const parser = new DOMParser();
@@ -240,10 +239,9 @@ const extractTopicsFromContent = (htmlContent: string): string[] => {
 // Function to fetch latest issue URLs from archive page
 const fetchLatestIssueUrls = async (): Promise<{ url: string; date: string }[]> => {
   try {
-    const proxyUrl = 'https://api.allorigins.win/get?url=';
-    const response = await fetch(proxyUrl + encodeURIComponent('https://archive.0xcafe.news'));
-    const data = await response.json();
-    const htmlContent = data.contents;
+    // Direct API Gateway request now that CORS is configured
+    const response = await fetch('https://archive.0xcafe.news');
+    const htmlContent = await response.text();
     
     if (!htmlContent) {
       throw new Error('No content received from archive page');
