@@ -1,0 +1,90 @@
+.subscribe_form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.subscribe_form_input_group {
+  display: flex;
+  width: 100%;
+}
+
+input {
+  height: 60px;
+}
+
+.subscribe_form_input {
+  flex: 1;
+  padding: 20px;
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #00cafe;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 1.2em;
+  background: #00000070;
+  color: white;
+}
+
+::placeholder {
+  color: rgb(194, 194, 194);
+}
+
+.subscribe_form_button {
+  background-color: #00cafe;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0 4px 4px 0;
+  transition: background-color 0.3s ease;
+  border-left: 1px solid #00cafe;
+}
+
+.subscribe_form_button_hover {
+  background-color: #008ab5;
+}
+
+.subscribe_success {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subscribe_success_icon {
+  width: 30px;
+  height: 30px;
+}
+
+.subscribe_success_message {
+  color: #10b981;
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+  .subscribe_form {
+    margin: 0 auto;
+  }
+
+  .subscribe_form_input_group {
+    flex-direction: column;
+  }
+
+  .subscribe_form_input {
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .subscribe_form_button {
+    border-radius: 4px;
+    border-left: none;
+  }
+
+  .subscribe_success_icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .subscribe_success_message {
+    color: #10b981;
+    font-size: 20px;
+  }
+}

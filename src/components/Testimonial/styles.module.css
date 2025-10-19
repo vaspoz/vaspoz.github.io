@@ -1,0 +1,11 @@
+.testimonial {
+  font-size: 15px;
+}
+
+.testimonialMeta {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.testimonialMeta strong {
+  color: var(--ifm-font-color-base);
+}
