@@ -3,7 +3,7 @@ import MailchimpSubscribe from "react-mailchimp-subscribe";
 import React from "react";
 
 const url =
-  "https://news.us21.list-manage.com/subscribe/post?u=REDACTED_MAILCHIMP_U&amp;id=REDACTED_MAILCHIMP_ID&amp;f_id=00cff5e6f0";
+  "https://news.us21.list-manage.com/subscribe/post?u=REDACTED_MAILCHIMP_U&amp;id=REDACTED_MAILCHIMP_ID&amp;f_id=REDACTED_MAILCHIMP_FID";
 
 const CustomForm = ({ status, message, onValidated }) => {
   let email;
