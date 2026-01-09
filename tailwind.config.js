@@ -1,64 +1,72 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        'cafe': {
-          50: '#f0fdff',
-          100: '#ccf7fe',
-          200: '#99edfd',
-          300: '#66e3fc',
-          400: '#00cafe',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+        terminal: {
+          bg: '#0d1117',
+          'bg-secondary': '#161b22',
+          'bg-tertiary': '#21262d',
+          border: '#30363d',
+          text: '#e6edf3',
+          'text-muted': '#8b949e',
         },
-        'purple': {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7c3aed',
-          800: '#6b21a8',
-          900: '#581c87',
-        }
+        syntax: {
+          keyword: '#c678dd',
+          string: '#98c379',
+          function: '#61afef',
+          comment: '#5c6370',
+          number: '#d19a66',
+          constant: '#e06c75',
+          variable: '#56b6c2',
+        },
+        brand: '#00cafe',
+        control: {
+          red: '#ff5f56',
+          yellow: '#ffbd2e',
+          green: '#27c93f',
+        },
+      },
+      fontFamily: {
+        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'monospace'],
       },
       animation: {
-        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-        'fade-in': 'fadeIn 1s ease-out forwards',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'bounce-slow': 'bounce 2s infinite',
+        'blink': 'blink 1s step-end infinite',
+        'typing': 'typing 3.5s steps(40, end)',
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
-        fadeInUp: {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(30px)'
-          },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)'
-          },
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
+        typing: {
+          '0%': { width: '0' },
+          '100%': { width: '100%' },
         },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
-        }
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 20px rgba(0, 202, 254, 0.2)' },
+          '100%': { boxShadow: '0 0 30px rgba(0, 202, 254, 0.4)' },
+        },
       },
-      fontFamily: {
-        'inter': ['Inter', 'system-ui', 'sans-serif'],
-        'poppins': ['Poppins', 'system-ui', 'sans-serif'],
-      }
+      boxShadow: {
+        'terminal': '0 0 0 1px rgba(48, 54, 61, 0.5), 0 16px 68px rgba(0, 0, 0, 0.55)',
+        'terminal-glow': '0 0 20px rgba(0, 202, 254, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.3)',
+      },
     },
   },
   plugins: [],
-}
-
+};

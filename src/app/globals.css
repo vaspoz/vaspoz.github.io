@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --terminal-bg: #0d1117;
+  --terminal-glow: rgba(0, 202, 254, 0.15);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--terminal-bg);
+  color: #e6edf3;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #161b22;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(0, 202, 254, 0.3);
+  color: #e6edf3;
+}
+
+/* Terminal glow effect */
+.terminal-glow {
+  box-shadow:
+    0 0 20px var(--terminal-glow),
+    inset 0 0 60px rgba(0, 0, 0, 0.3);
+}
+
+/* ASCII art styling */
+.ascii-art {
+  white-space: pre;
+  line-height: 1.2;
+  font-size: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* Scanline effect (optional, subtle) */
+.scanline-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  z-index: 9999;
+  opacity: 0.15;
+}
+
+/* Focus styles */
+input:focus,
+button:focus {
+  outline: 2px solid #00cafe;
+  outline-offset: 2px;
+}
+
+/* Link hover effect */
+a {
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #00cafe;
+}

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_click",
+      "Bash(node scripts/fetch-archive-data.js:*)",
+      "Bash(curl:*)",
+      "Bash(node scripts/fetch-feature-examples.js:*)",
+      "Bash(npm run fetch-data:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

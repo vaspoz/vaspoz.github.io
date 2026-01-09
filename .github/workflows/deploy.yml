@@ -2,12 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
+    branches: [source, feat/newUI]
   schedule:
     - cron: "0 8 * * 1-5" # Runs every weekday at 10:00 AM CEST
 
 jobs:
   build:
-    name: Build Docusaurus
+    name: Build Next.js
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -16,37 +17,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: npm
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
 
       - name: Install dependencies
         run: npm ci
-
-      - name: AWS Login
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-          aws configure set default.region eu-central-1
-
-      - name: Copy files from S3
-        run: |
-          aws s3 cp s3://0xcafe-newsletter-archive/archive/ archive-transformer/archive --recursive
-
-          # Latest issue must not be published, it's only for the main page
-          rm archive-transformer/archive/latest.html
-
-      - name: Transform files
-        run: |
-          ls -lah
-          cd archive-transformer 
-          node transform.js
 
       - name: Build website
         run: npm run build
@@ -54,7 +29,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: out
 
   deploy:
     name: Deploy to GitHub Pages
