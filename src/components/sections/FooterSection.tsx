@@ -78,7 +78,7 @@ export function FooterSection() {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t border-terminal-border text-center">
           <p className="text-terminal-text-muted text-sm">
-            <span className="text-syntax-comment">{`/* ${currentYear} ${SITE_CONFIG.title} - All rights reserved */`}</span>
+            <span className="text-syntax-comment">{`/* ${currentYear} Sedia Solutions - All rights reserved */`}</span>
           </p>
         </div>
       </div>
