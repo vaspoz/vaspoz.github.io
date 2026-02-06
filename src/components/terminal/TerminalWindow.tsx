@@ -47,7 +47,7 @@ export function TerminalWindow({
       </div>
 
       {/* Content */}
-      <div className="p-4 font-mono text-terminal-text">
+      <div className="p-4 font-mono text-terminal-text overflow-hidden">
         {children}
       </div>
     </Wrapper>
