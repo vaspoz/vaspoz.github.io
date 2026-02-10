@@ -1,0 +1,2 @@
+[    1266ms] [WARNING] For security reasons, Hotjar only works over HTTPS. Learn more: https://help.hotjar.com/hc/en-us/articles/115011624047 @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    2082ms] [WARNING] Sparkloop is disabled because the account is not active. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
