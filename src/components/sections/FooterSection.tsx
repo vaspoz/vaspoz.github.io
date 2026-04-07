@@ -56,14 +56,6 @@ export function FooterSection() {
                 <Comment>// X (Twitter)</Comment>
               </a>
               <a
-                href={SOCIAL_LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-terminal-text-muted hover:text-brand transition-colors"
-              >
-                <Comment>// LinkedIn</Comment>
-              </a>
-              <a
                 href={SOCIAL_LINKS.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
