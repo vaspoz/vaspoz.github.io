@@ -48,14 +48,6 @@ export function FooterSection() {
             <div className="text-syntax-keyword font-semibold">Connect</div>
             <nav className="space-y-2">
               <a
-                href={SOCIAL_LINKS.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-terminal-text-muted hover:text-brand transition-colors"
-              >
-                <Comment>// X (Twitter)</Comment>
-              </a>
-              <a
                 href={SOCIAL_LINKS.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
