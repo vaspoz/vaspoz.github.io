@@ -17,7 +17,6 @@ export const ANALYTICS = {
 };
 
 export const SOCIAL_LINKS = {
-  twitter: 'https://twitter.com/basil_0xcafe',
   linkedin: 'https://www.linkedin.com/company/0xcafe',
   telegram: 'https://t.me/news_0xcafe',
   kofi: 'https://ko-fi.com/R5R6Q8N0Z',

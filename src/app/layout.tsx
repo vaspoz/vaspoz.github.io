@@ -19,12 +19,6 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
-    creator: '@basil_0xcafe',
-  },
   icons: {
     icon: SITE_CONFIG.logo,
   },
