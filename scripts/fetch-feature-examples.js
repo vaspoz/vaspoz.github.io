@@ -52,6 +52,38 @@ async function fetchNewsletter(date) {
   }
 }
 
+// Decode the HTML entities the archive emits in link text
+function decodeEntities(str) {
+  return str
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&');
+}
+
+// The archive delimits each section with HTML comments. Return the markup
+// between a start and end marker, or null when the section is absent.
+function sliceSection(html, startMarker, endMarker) {
+  const start = html.indexOf(startMarker);
+  if (start === -1) return null;
+  const end = html.indexOf(endMarker, start + startMarker.length);
+  if (end === -1) return null;
+  return html.slice(start + startMarker.length, end);
+}
+
+// Strip tags from a chunk and return its non-trivial text runs, in order.
+function textRuns(chunk) {
+  if (!chunk) return [];
+  return chunk
+    .split(/<[^>]+>/)
+    .map(part => decodeEntities(part).replace(/\s+/g, ' ').trim())
+    .filter(text => text.length > 2);
+}
+
 // Extract news headlines from newsletter HTML
 function extractNews(html) {
   const news = [];
@@ -64,7 +96,7 @@ function extractNews(html) {
   while ((match = linkRegex.exec(html)) !== null) {
     const [, url, text] = match;
     const decodedUrl = url.replace(/&#x2F;/g, '/');
-    const cleanText = text.trim();
+    const cleanText = decodeEntities(text.trim());
 
     // Skip short text, unsubscribe links, and github links
     if (cleanText.length < 20) continue;
@@ -104,38 +136,29 @@ function extractRepos(html) {
   return [...new Set(repos)];
 }
 
-// Extract articles - look for links from article sites
-function extractArticles(html) {
-  const articles = [];
-  // Normalize whitespace to handle multiline HTML
-  const normalizedHtml = html.replace(/\s+/g, ' ');
-  const linkRegex = /<a[^>]*href="([^"]*)"[^>]*>([^<]+)<\/a/gi;
-  let match;
+// Extract the trivia line from the "Useless Fact of the Day" section
+function extractUselessFact(html) {
+  const runs = textRuns(sliceSection(html, '<!-- useless fact section -->', '<!-- /useless fact section -->'));
+  // Runs are [heading, fact]; the heading carries the emoji title.
+  const fact = runs.find(text => !/Useless Fact of the Day/i.test(text));
+  return fact ? [fact] : [];
+}
 
-  const articleDomains = ['medium.com', 'dev.to', 'hashnode', 'substack', 'freecodecamp', 'hackernoon', 'dzone', 'infoq'];
+// Extract the event blurb from the "This Day in History" section
+function extractHistory(html) {
+  const runs = textRuns(sliceSection(html, '<!-- history event body -->', '<!-- /This Day in History section -->'));
+  const event = runs.find(text => !/^Read more on Wikipedia$/i.test(text) && text.length > 30);
+  return event ? [event] : [];
+}
 
-  while ((match = linkRegex.exec(normalizedHtml)) !== null) {
-    const [, url, text] = match;
-    // Decode URL entities
-    const decodedUrl = url.replace(/&#x2F;/g, '/');
-    const cleanText = text.trim()
-      .replace(/&quot;/g, '"')
-      .replace(/&#x2F;/g, '/')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>');
-
-    if (cleanText.length < 20) continue;
-    if (decodedUrl.includes('UNSUB') || decodedUrl.includes('mailto:')) continue;
-    if (decodedUrl.includes('github.com')) continue;
-
-    // Check for article patterns
-    if (articleDomains.some(domain => decodedUrl.includes(domain))) {
-      articles.push(cleanText);
-    }
-  }
-
-  return articles;
+// Extract the numbered tip from the "Corporate Sabotage 101" section
+function extractSabotage(html) {
+  const runs = textRuns(
+    sliceSection(html, '<!-- Corporate Sabotage 101 section -->', '<!-- /Corporate Sabotage 101 section -->')
+  );
+  const tipIndex = runs.findIndex(text => /^Tip #\d+:?$/i.test(text));
+  if (tipIndex === -1 || !runs[tipIndex + 1]) return [];
+  return [`${runs[tipIndex].replace(/:$/, '')}: ${runs[tipIndex + 1]}`];
 }
 
 async function main() {
@@ -149,9 +172,15 @@ async function main() {
 
   console.log(`Latest issue: ${formatArchiveDate(latestDate)}`);
 
-  const allNews = [];
-  const allArticles = [];
-  const allRepos = [];
+  // One entry per feature card on the site, in display order
+  const categories = {
+    uselessFacts: extractUselessFact,
+    history: extractHistory,
+    news: extractNews,
+    sabotage: extractSabotage,
+    repos: extractRepos,
+  };
+  const collected = Object.fromEntries(Object.keys(categories).map(key => [key, []]));
 
   // Fetch last 5 newsletters to get diverse examples
   const current = new Date(latestDate);
@@ -163,13 +192,9 @@ async function main() {
     if (html) {
       console.log(`  Parsing ${formatArchiveDate(current)}...`);
 
-      const news = extractNews(html);
-      const articles = extractArticles(html);
-      const repos = extractRepos(html);
-
-      allNews.push(...news);
-      allArticles.push(...articles);
-      allRepos.push(...repos);
+      for (const [key, extract] of Object.entries(categories)) {
+        collected[key].push(...extract(html));
+      }
 
       fetched++;
     }
@@ -178,18 +203,15 @@ async function main() {
   }
 
   // Remove duplicates and take top examples
-  const uniqueNews = [...new Set(allNews)].slice(0, 5);
-  const uniqueArticles = [...new Set(allArticles)].slice(0, 5);
-  const uniqueRepos = [...new Set(allRepos)].slice(0, 5);
+  const output = { updatedAt: new Date().toISOString() };
+  for (const key of Object.keys(categories)) {
+    output[key] = [...new Set(collected[key])].slice(0, 5);
+  }
 
-  const output = {
-    news: uniqueNews,
-    articles: uniqueArticles,
-    repos: uniqueRepos,
-    updatedAt: new Date().toISOString(),
-  };
-
-  console.log(`\nFound: ${uniqueNews.length} news, ${uniqueArticles.length} articles, ${uniqueRepos.length} repos`);
+  const summary = Object.keys(categories)
+    .map(key => `${output[key].length} ${key}`)
+    .join(', ');
+  console.log(`\nFound: ${summary}`);
 
   fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
   console.log(`Output: ${outputPath}`);

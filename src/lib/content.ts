@@ -2,16 +2,28 @@ import featureExamples from './feature-examples.json';
 
 export const features = [
   {
+    command: 'cat /dev/useless',
+    title: 'Useless Fact of the Day',
+    subtitle: 'Trivia you will never need, and never forget',
+    examples: featureExamples.uselessFacts.slice(0, 3),
+  },
+  {
+    command: 'git log --since=1year',
+    title: 'This Day in History',
+    subtitle: 'What happened on this date, with a link to read on',
+    examples: featureExamples.history.slice(0, 3),
+  },
+  {
     command: 'news --daily',
     title: 'Daily News Updates',
     subtitle: 'The latest news in tech, business, science, and more',
     examples: featureExamples.news.slice(0, 3),
   },
   {
-    command: 'read --articles',
-    title: 'Articles',
-    subtitle: 'Articles on a variety of tech topics',
-    examples: featureExamples.articles.slice(0, 3),
+    command: 'sudo sabotage --corporate',
+    title: 'Corporate Sabotage 101',
+    subtitle: 'One field-tested tip for surviving the daily grind',
+    examples: featureExamples.sabotage.slice(0, 3),
   },
   {
     command: 'git clone --trending',

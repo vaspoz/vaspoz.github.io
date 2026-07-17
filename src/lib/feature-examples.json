@@ -1,24 +1,38 @@
 {
-  "news": [
-    "Worlds largest electric ship launched by Tasmanian boatbuilder",
-    "The man taking over the Large Hadron Collider",
-    "OpenAI bets big on audio as Silicon Valley declares war on screens",
-    "The science of how (and when) we decide to speak out–or self-censor",
-    "A man taking over the Large Hadron Collider – only to switch it off"
+  "updatedAt": "2026-07-17T08:01:50.578Z",
+  "uselessFacts": [
+    "40% of McDonald’s profits come from the sales of Happy Meals.",
+    "The average person laughs 10 times a day!",
+    "One of the reasons marijuana is illegal today is because cotton growers in the 1930s lobbied against hemp farmers they saw it as competition.",
+    "The surface of the Earth is about 60% water and 10% ice.",
+    "Half the foods eaten throughout the world today were developed by farmers in the Andes Mountains (including potatoes, maize, sweet potatoes, squash, all varieties of beans, peanuts, manioc, papayas, strawberries, mulberries and many others)."
   ],
-  "articles": [
-    "What Building Small, Personal Tools Taught Me This Year (4 min read)",
-    "Is \"Vibe Coding\" Ruining My CS Degree? (3 min read)",
-    "Inktober/Divtober Sting (2 min read)",
-    "Catch up on your favorite Youtube&Tiktok videos (3 min read)",
-    "Office Desk - CSS Art Edition (2 min read)"
+  "history": [
+    "William Cranch Bond and John Adams Whipple took a daguerreotype of Vega, the first astrophotograph of a star other than the Sun.",
+    "Fragments of Comet Shoemaker–Levy 9 began colliding with the planet Jupiter, with the first impact causing a fireball that reached a peak temperature of 24,000 kelvin.",
+    "Sega's first home video game console, the SG-1000, was released in Japan.",
+    "The medieval St Mark's Campanile in Venice collapsed, also demolishing the Loggetta del Sansovino.",
+    "Watergate scandal: Under questioning by Senate investigators, White House deputy chief of staff Alexander Butterfield revealed the existence of a secret taping system in the Oval Office."
+  ],
+  "news": [
+    "EU will force Google to share search data and open up AI on Android",
+    "Catnip lotion as effective as Deet at repelling mosquitoes, study finds",
+    "Microsoft's Secure Boot has been broken for a decade and no one noticed",
+    "A new app alerts you if someone nearby is wearing smart glasses",
+    "Datacentres drive up big tech's carbon emissions to a third of those of France"
+  ],
+  "sabotage": [
+    "Tip #10: Add \"(hard stop at :30)\" to the invite. Keep talking until :55.",
+    "Tip #9: Ask \"can everyone see my screen?\" Share nothing.",
+    "Tip #8: End every meeting with \"let's circle back.\" Circle nowhere.",
+    "Tip #7: Accept the meeting, show \"away,\" join camera-off and mic-off, stay silent the full hour.",
+    "Tip #6: Move the recurring 1:1 by 15 minutes. Every week. Never the same direction."
   ],
   "repos": [
-    "fsmunoz/datastar-cl",
-    "bshepp/RESIDUALS",
-    "lbjlaq/Antigravity-Manager",
-    "evrone/go-clean-template",
-    "plexguide/Huntarr.io"
-  ],
-  "updatedAt": "2026-01-06T07:18:58.589Z"
+    "XiaomiMiMo/MiMo-Code",
+    "minh-ton/reynard-browser",
+    "floodtide/dom-docx",
+    "ByteDance-Seed/VeOmni",
+    "foryourhealth111-pixel/Vibe-Skills"
+  ]
 }
